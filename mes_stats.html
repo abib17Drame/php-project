@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Statistiques</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 25px;
+        }
+
+       
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        h1,
+        h2 {
+            color: #e0e0e0;
+            /* Texte clair */
+        }
+
+        section {
+            background-color: #5c6f86;
+            
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        select {
+            background-color: #162447;
+            /* Bleu foncé */
+            color: #e0e0e0;
+            /* Texte clair */
+            border: 1px solid #0f3460;
+            /* Bordure bleue */
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .aucune-donnee {
+            text-align: center;
+            color: #e0e0e0;
+            /* Texte clair */
+            padding: 20px;
+            background-color: #0e223b;
+            /* Bleu sombre */
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="dashboard_athlete.html">Tableau de bord</a></li>
+            <li><a href="mes_courses.html">Mes courses</a></li>
+            <li><a href="mes_resultats.html">Résultats</a></li>
+            <li><a href="mes_informations.html">Mes informations</a></li>
+            <li><a href="logout.php">Déconnexion</a></li>
+        </ul>
+    </nav>
+    
+           <center><h1>Mes Statistiques</h1></center>
+     
+    <!-- Sous-section "Évolution des performances" -->
+    
+    <section>
+        <h2>Évolution des performances</h2>
+        <div class="aucune-donnee">Aucune donnée pour l’instant</div>
+    </section>
+
+    <!-- Sous-section "Comparaison avec d’autres athlètes" -->
+    <section>
+        <h2>Comparaison avec d’autres athlètes</h2>
+        <div class="aucune-donnee">Aucune donnée pour l’instant</div>
+    </section>
+
+    <!-- Sous-section "Meilleur classement obtenu" -->
+    <section>
+        <h2>Meilleur classement obtenu</h2>
+        <div class="aucune-donnee">Aucune donnée pour l’instant</div>
+    </section>
+
+</body>
+
+</html>
