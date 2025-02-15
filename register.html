@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription - Sprint Meet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Inscription</h1>
+  <form id="registerForm" action="scripts/register.php" method="POST" enctype="multipart/form-data">
+    <label for="profil">Profil :</label>
+    <select name="profil" id="profil" required>
+      <option value="">Choisissez votre profil</option>
+      <option value="arbitre">Arbitre</option>
+      <option value="athlete">Athlète</option>
+    </select>
+    <div id="commonFields" class="hidden">
+      <label for="prenom">Prénom :</label>
+      <input type="text" id="prenom" name="prenom" required>
+      
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom" required>
+      
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="mot_de_passe">Mot de passe :</label>
+      <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+    </div>
+    
+    <div id="arbitreFields" class="hidden">
+      <label for="identifiant">Identifiant :</label>
+      <input type="text" id="identifiant" name="identifiant">
+      
+      <label for="fichier_certif">Certificat d'arbitrage :</label>
+      <input type="file" id="fichier_certif" name="fichier_certif">
+    </div>
+    
+    <div id="athleteFields" class="hidden">
+      <label for="sexe">Sexe :</label>
+      <select id="sexe" name="sexe" required>
+        <option value="">Choisissez votre sexe</option>
+        <option value="homme">Homme</option>
+        <option value="femme">Femme</option>
+      </select>
+      
+      <label for="discipline">Discipline :</label>
+      <select id="discipline" name="discipline" required>
+        <option value="">Choisissez la discipline</option>
+        <option value="Sprint100m">Sprint 100m</option>
+        <option value="Haies100m">Haies 100m</option>
+      </select>
+      
+      <label for="age">Âge :</label>
+      <input type="number" id="age" name="age" min="18" required>
+      
+      <label for="pays">Pays :</label>
+      <input type="text" id="pays" name="pays">
+      
+      <label for="record">Record officiel :</label>
+      <input type="text" id="record" name="record" value="00:00:00" required>
+      
+      <label for="fichier_record">Fichier record :</label>
+      <input type="file" id="fichier_record" name="fichier_record">
+    </div>
+    
+    <button type="submit" id="submitButton" class="hidden">S'inscrire</button>
+  </form>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const profilSelect = document.getElementById('profil');
+      const commonFields = document.getElementById('commonFields');
+      const arbitreFields = document.getElementById('arbitreFields');
+      const athleteFields = document.getElementById('athleteFields');
+      const submitButton = document.getElementById('submitButton');
+      
+      profilSelect.addEventListener('change', function() {
+        commonFields.classList.add('hidden');
+        arbitreFields.classList.add('hidden');
+        athleteFields.classList.add('hidden');
+        submitButton.classList.add('hidden');
+        
+        if (this.value === 'arbitre') {
+          commonFields.classList.remove('hidden');
+          arbitreFields.classList.remove('hidden');
+          submitButton.classList.remove('hidden');
+        } else if (this.value === 'athlete') {
+          commonFields.classList.remove('hidden');
+          athleteFields.classList.remove('hidden');
+          submitButton.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

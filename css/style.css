@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  form label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  form input, form select, form button {
+    margin-top: 5px;
+  }
+  
+  .important {
+    font-weight: bold;
+    color: red;
+  }
+  
