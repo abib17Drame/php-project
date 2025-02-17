@@ -19,7 +19,7 @@ try {
         if ($user['role'] === 'admin') {
             header("Location: ../dashboard_admin.html");
         } elseif ($user['role'] === 'arbitre') {
-            header("Location: ../dashboard_arbitre.html");
+            header("Location: ../dashboard_arbitre.php");
         } else {
             header("Location: ../dashboard_athlete.html");
         }

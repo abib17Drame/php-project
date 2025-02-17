@@ -25,6 +25,15 @@ try {
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="mes_informations.php">Mes Informations</a></li>
+            <li><a href="mescourses.php">Courses inscrit</a></li>
+            <li><a href="../results.php">Résultats</a></li>
+            <li><a href="../mes_stats.html">Statistiques</a></li>
+            <li><a href="logout.php">Déconnexion</a></li>
+        </ul>
+    </nav>
   <h1>Choisissez la course à laquelle vous souhaitez vous inscrire</h1>
   <?php if (empty($courses)): ?>
       <p>Aucune course disponible pour le moment.</p>
