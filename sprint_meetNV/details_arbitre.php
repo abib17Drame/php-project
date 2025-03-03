@@ -1,19 +1,19 @@
 <?php
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 $id = $_GET['id'];
-$sql = "SELECT * FROM users WHERE id = ? AND role = 'arbitre'";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$id]);
-$arbitre = $stmt->fetch();
+
+// Récupérer les informations de l'arbitre
+$sql = "SELECT * FROM users WHERE id = '$id' AND role = 'arbitre'";
+$result = mysqli_query($conn, $sql);
+$arbitre = mysqli_fetch_assoc($result);
 
 // Récupérer les courses assignées
 $sql_courses = "SELECT c.* FROM courses c 
                JOIN arbitrage a ON c.id = a.course_id 
-               WHERE a.arbitre_id = ?";
-$stmt_courses = $pdo->prepare($sql);
-$stmt_courses->execute([$id]);
-$courses = $stmt_courses->fetchAll();
+               WHERE a.arbitre_id = '$id'";
+$result_courses = mysqli_query($conn, $sql_courses);
+$courses = mysqli_fetch_all($result_courses, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -33,11 +33,11 @@ $courses = $stmt_courses->fetchAll();
     <h1>Détails de l'arbitre</h1>
     
     <div class="info-box">
-        <h2><?= $arbitre['prenom'] . ' ' . $arbitre['nom'] ?></h2>
-        <p>Email: <?= $arbitre['email'] ?></p>
-        <p>Identifiant: <?= $arbitre['identifiant'] ?></p>
-        <?php if($arbitre['fichier_certif']): ?>
-            <p>Certification: <a href="certifications/<?= $arbitre['fichier_certif'] ?>">Voir le fichier</a></p>
+        <h2><?php echo $arbitre['prenom'] . ' ' . $arbitre['nom']; ?></h2>
+        <p>Email: <?php echo $arbitre['email']; ?></p>
+        <p>Identifiant: <?php echo $arbitre['identifiant']; ?></p>
+        <?php if ($arbitre['fichier_certif']): ?>
+            <p>Certification: <a href="certifications/<?php echo $arbitre['fichier_certif']; ?>">Voir le fichier</a></p>
         <?php endif; ?>
     </div>
 
@@ -47,10 +47,10 @@ $courses = $stmt_courses->fetchAll();
             <th>Course</th>
             <th>Date</th>
         </tr>
-        <?php foreach($courses as $course): ?>
+        <?php foreach ($courses as $course): ?>
             <tr>
-                <td><?= $course['nom'] ?></td>
-                <td><?= $course['date_course'] ?></td>
+                <td><?php echo $course['nom']; ?></td>
+                <td><?php echo $course['date_course']; ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

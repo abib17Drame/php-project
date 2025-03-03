@@ -1,10 +1,10 @@
 <?php
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 // Récupération des courses
 $sql = "SELECT * FROM courses ORDER BY date_course DESC";
-$stmt = $pdo->query($sql);
-$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$result = mysqli_query($conn, $sql);
+$courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -62,25 +62,27 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Nombre d'inscrits</th>
             <th>Actions</th>
         </tr>
-        <?php foreach($courses as $course): 
+        <?php foreach ($courses as $course): 
             // Compter les inscrits pour cette course
             $sql_count = "SELECT COUNT(*) FROM inscriptions WHERE course_id = " . $course['id'];
-            $count = $pdo->query($sql_count)->fetchColumn();
+            $count_result = mysqli_query($conn, $sql_count);
+            $count = mysqli_fetch_row($count_result)[0];
         ?>
             <tr>
-                <td><?= $course['nom'] ?></td>
-                <td><?= $course['date_course'] ?></td>
-                <td><?= $course['statut_inscription'] ?></td>
-                <td><?= $count ?></td>
+                <td><?php echo $course['nom']; ?></td>
+                <td><?php echo $course['date_course']; ?></td>
+                <td><?php echo $course['statut_inscription']; ?></td>
+                <td><?php echo $count; ?></td>
                 <td>
-                    <a href="modifier_course.php?id=<?= $course['id'] ?>" class="btn btn-edit">Modifier</a>
-                    <a href="supprimer_course.php?id=<?= $course['id'] ?>" class="btn btn-delete">Supprimer</a>
-                    <a href="inscrits_course.php?id=<?= $course['id'] ?>" class="btn btn-view">Voir inscrits</a>
-                    <a href="toggle_statut.php?id=<?= $course['id'] ?>" class="btn">
-                        <?= $course['statut_inscription'] == 'ouvert' ? 'Fermer' : 'Ouvrir' ?>
+                    <a href="modifier_course.php?id=<?php echo $course['id']; ?>" class="btn btn-edit">Modifier</a>
+                    <a href="supprimer_course.php?id=<?php echo $course['id']; ?>" class="btn btn-delete">Supprimer</a>
+                    <a href="inscrits_course.php?id=<?php echo $course['id']; ?>" class="btn btn-view">Voir inscrits</a>
+                    <a href="toggle_statut.php?id=<?php echo $course['id']; ?>" class="btn">
+                        <?php echo $course['statut_inscription'] == 'ouvert' ? 'Fermer' : 'Ouvrir'; ?>
                     </a>
                 </td>
             </tr>
         <?php endforeach; ?>
-    </table></body>
+    </table>
+</body>
 </html>

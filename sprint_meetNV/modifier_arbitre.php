@@ -1,33 +1,36 @@
 <?php
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 $id = $_GET['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupère les données du formulaire
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $identifiant = $_POST['identifiant'];
+
+    // Requête SQL pour mettre à jour l'arbitre
     $sql = "UPDATE users SET 
-            nom = ?,
-            prenom = ?,
-            email = ?,
-            identifiant = ?
-            WHERE id = ? AND role = 'arbitre'";
+            nom = '$nom',
+            prenom = '$prenom',
+            email = '$email',
+            identifiant = '$identifiant'
+            WHERE id = $id AND role = 'arbitre'";
     
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        $_POST['nom'],
-        $_POST['prenom'],
-        $_POST['email'],
-        $_POST['identifiant'],
-        $id
-    ]);
-    
-    header('Location: arbitres.php');
-    exit;
+    // Exécute la requête
+    if (mysqli_query($conn, $sql)) {
+        header('Location: arbitres.php');
+        exit;
+    } else {
+        echo "Erreur : " . mysqli_error($conn);
+    }
 }
 
-$sql = "SELECT * FROM users WHERE id = ? AND role = 'arbitre'";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$id]);
-$arbitre = $stmt->fetch();
+// Récupérer les informations de l'arbitre
+$sql = "SELECT * FROM users WHERE id = $id AND role = 'arbitre'";
+$result = mysqli_query($conn, $sql);
+$arbitre = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -49,19 +52,19 @@ $arbitre = $stmt->fetch();
     <form method="POST">
         <div class="form-group">
             <label>Nom</label>
-            <input type="text" name="nom" value="<?= $arbitre['nom'] ?>" required>
+            <input type="text" name="nom" value="<?php echo $arbitre['nom']; ?>" required>
         </div>
         <div class="form-group">
             <label>Prénom</label>
-            <input type="text" name="prenom" value="<?= $arbitre['prenom'] ?>" required>
+            <input type="text" name="prenom" value="<?php echo $arbitre['prenom']; ?>" required>
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input type="email" name="email" value="<?= $arbitre['email'] ?>" required>
+            <input type="email" name="email" value="<?php echo $arbitre['email']; ?>" required>
         </div>
         <div class="form-group">
             <label>Identifiant</label>
-            <input type="text" name="identifiant" value="<?= $arbitre['identifiant'] ?>" required>
+            <input type="text" name="identifiant" value="<?php echo $arbitre['identifiant']; ?>" required>
         </div>
         <button type="submit">Enregistrer</button>
         <a href="arbitres.php">Annuler</a>

@@ -1,3 +1,7 @@
+<?php
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -30,6 +34,8 @@
           padding: 5px 10px;
           border-radius: 4px;
           cursor: pointer;
+          color: white;
+          text-decoration: none;
       }
       .btn-view {background-color: #3498db;}
       .btn-edit {background-color: #2ecc71;}
@@ -37,6 +43,12 @@
       .search-box {
           margin: 20px 0;
           padding: 10px;
+      }
+      .btn-voir-dossier{
+        background-color:rgb(160, 174, 39);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
       }
   </style>
 </head>
@@ -66,33 +78,30 @@
       </thead>
       <tbody>
           <?php
-          require_once 'includes/db_connect.php';
+          // Récupération des athlètes
+          $sql = "SELECT id, nom, prenom, email, profil, sexe, record_officiel FROM users WHERE role = 'athlete'";
+          $result = mysqli_query($conn, $sql);
+          $athletes = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-          try {
-              // Récupération des athlètes
-              $sql = "SELECT id, nom, prenom, email, profil, sexe, record_officiel FROM users WHERE role = 'athlete'";
-              $stmt = $pdo->query($sql);
-              $athletes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-              foreach($athletes as $athlete): ?>
+          foreach ($athletes as $athlete): ?>
               <tr>
-                  <td><?= htmlspecialchars($athlete['id']) ?></td>
-                  <td><?= htmlspecialchars($athlete['nom']) ?></td>
-                  <td><?= htmlspecialchars($athlete['prenom']) ?></td>
-                  <td><?= htmlspecialchars($athlete['email']) ?></td>
-                  <td><?= htmlspecialchars($athlete['profil']) ?></td>
-                  <td><?= htmlspecialchars($athlete['record_officiel']) ?></td>
+                  <td><?php echo htmlspecialchars($athlete['id']); ?></td>
+                  <td><?php echo htmlspecialchars($athlete['nom']); ?></td>
+                  <td><?php echo htmlspecialchars($athlete['prenom']); ?></td>
+                  <td><?php echo htmlspecialchars($athlete['email']); ?></td>
+                  <td><?php echo htmlspecialchars($athlete['profil']); ?></td>
+                  <td><?php echo htmlspecialchars($athlete['record_officiel']); ?></td>
                   <td class="action-buttons">
-                      <button class="btn btn-view" onclick="voirDetails(<?= $athlete['id'] ?>)">Voir</button>
-                      <button class="btn btn-edit" onclick="modifierAthlete(<?= $athlete['id'] ?>)">Modifier</button>
-                      <button class="btn btn-delete" onclick="supprimerAthlete(<?= $athlete['id'] ?>)">Supprimer</button>
-                  </td>
+                      <a href="details_athlete.php?id=<?php echo $athlete['id']; ?>" class="btn btn-view">Details</a>
+                      <a href="modifier_athlete.php?id=<?php echo $athlete['id']; ?>" class="btn btn-edit">Modifier</a>
+                      <a href="supprimer_athlete.php?id=<?php echo $athlete['id']; ?>" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet athlète ?')">Supprimer</a>
+                      <a href="admin/voir_dossiers.php?athlete_id=<?php echo $athlete['id']; ?>" 
+                         class="btn-voir-dossier">
+                          Voir dossiers
+                      </a>
+                    </td>
               </tr>
-              <?php endforeach;
-          } catch(PDOException $e) {
-              echo "Erreur : " . $e->getMessage();
-          }
-          ?>
+          <?php endforeach; ?>
       </tbody>
   </table>
 
@@ -118,20 +127,6 @@
               row.style.display = !filter || profile === filter ? '' : 'none';
           });
       });
-
-      function voirDetails(id) {
-          window.location.href = `details_athlete.php?id=${id}`;
-      }
-
-      function modifierAthlete(id) {
-          window.location.href = `modifier_athlete.php?id=${id}`;
-      }
-
-      function supprimerAthlete(id) {
-          if(confirm('Êtes-vous sûr de vouloir supprimer cet athlète ?')) {
-              window.location.href = `supprimer_athlete.php?id=${id}`;
-          }
-      }
   </script>
 </body>
 </html>

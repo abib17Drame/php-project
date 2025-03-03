@@ -1,11 +1,10 @@
 <?php
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 // Récupérer toutes les courses disponibles
 $sql = "SELECT * FROM courses WHERE date_course >= CURRENT_DATE AND statut_inscription = 'ouvert' ORDER BY date_course";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$result = mysqli_query($conn, $sql);
+$courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -46,13 +45,13 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Statut</th>
             <th>Action</th>
         </tr>
-        <?php foreach($courses as $course): ?>
+        <?php foreach ($courses as $course): ?>
             <tr>
-                <td><?= $course['nom'] ?></td>
-                <td><?= $course['date_course'] ?></td>
-                <td><?= $course['statut_inscription'] ?></td>
+                <td><?php echo $course['nom']; ?></td>
+                <td><?php echo $course['date_course']; ?></td>
+                <td><?php echo $course['statut_inscription']; ?></td>
                 <td>
-                    <a href="scripts/register_to_course.php?course_id=<?= $course['id'] ?>" class="inscription-btn">S'inscrire</a>
+                    <a href="scripts/register_to_course.php?course_id=<?php echo $course['id']; ?>" class="inscription-btn">S'inscrire</a>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,7 +1,8 @@
 <?php
 session_start();
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
+// Vérifie si l'utilisateur est connecté et est un arbitre
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'arbitre') {
     header("Location: login.html");
     exit;
@@ -12,28 +13,24 @@ if ($course_id <= 0) {
     die("Erreur : Course non spécifiée.");
 }
 
-try {
-    // Récupérer la course
-    $stmt = $pdo->prepare("SELECT * FROM courses WHERE id = :course_id");
-    $stmt->execute([':course_id' => $course_id]);
-    $course = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$course) {
-        die("Erreur : Course introuvable.");
-    }
+// Récupérer la course
+$sql = "SELECT * FROM courses WHERE id = $course_id";
+$result = mysqli_query($conn, $sql);
+$course = mysqli_fetch_assoc($result);
 
-    // Récupérer les athlètes inscrits à cette course
-    $stmt = $pdo->prepare("
-        SELECT i.id AS inscription_id, u.nom, u.prenom, u.sexe, u.age, u.pays
+if (!$course) {
+    die("Erreur : Course introuvable.");
+}
+
+// Récupérer les athlètes inscrits à cette course
+$sql = "SELECT i.id AS inscription_id, u.nom, u.prenom, u.sexe, u.age, u.pays
         FROM inscriptions i
         JOIN users u ON i.user_id = u.id
-        WHERE i.course_id = :course_id
-    ");
-    $stmt->execute([':course_id' => $course_id]);
-    $athletes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
-}
+        WHERE i.course_id = $course_id";
+$result_athletes = mysqli_query($conn, $sql);
+$athletes = mysqli_fetch_all($result_athletes, MYSQLI_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -41,7 +38,6 @@ try {
     <title>Ajouter Résultats - Sprint Meet</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Quelques styles spécifiques à cette page */
         .container {
             max-width: 900px;
             margin: 30px auto;

@@ -1,34 +1,33 @@
 <?php
 session_start();
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
+// Vérifie si l'utilisateur est connecté et est un arbitre
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'arbitre') {
     header('Location: login.html');
     exit;
 }
 
-// Vérification et récupération de l'ID de la course
+// Vérifie si l'ID de la course est présent dans l'URL
 if (!isset($_GET['course_id'])) {
     header('Location: dashboard_arbitre.php');
     exit;
 }
 $course_id = $_GET['course_id'];
 
-// Récupération des informations de la course
-$sql = "SELECT * FROM courses WHERE id = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$course_id]);
-$course = $stmt->fetch();
+// Récupère les informations de la course
+$sql = "SELECT * FROM courses WHERE id = $course_id";
+$result = mysqli_query($conn, $sql);
+$course = mysqli_fetch_assoc($result);
 
-// Récupération des athlètes inscrits
+// Récupère les athlètes inscrits à la course
 $sql = "SELECT u.*, i.temps_realise 
         FROM users u 
         INNER JOIN inscriptions i ON u.id = i.user_id 
-        WHERE i.course_id = ? AND u.role = 'athlete'
+        WHERE i.course_id = $course_id AND u.role = 'athlete'
         ORDER BY i.temps_realise";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$course_id]);
-$athletes = $stmt->fetchAll();
+$result_athletes = mysqli_query($conn, $sql);
+$athletes = mysqli_fetch_all($result_athletes, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -61,17 +60,17 @@ $athletes = $stmt->fetchAll();
     </style>
 </head>
 <body>
-    <h1>Noter les Performances - <?= htmlspecialchars($course['nom']) ?></h1>
+    <h1>Noter les Performances - <?php echo htmlspecialchars($course['nom']); ?></h1>
     
     <form class="performance-form" method="POST" action="sauvegarder_performances.php">
-        <input type="hidden" name="course_id" value="<?= $course_id ?>">
-        <?php foreach($athletes as $athlete): ?>
+        <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
+        <?php foreach ($athletes as $athlete): ?>
             <div class="athlete-row">
-                <h3><?= htmlspecialchars($athlete['prenom'] . ' ' . $athlete['nom']) ?></h3>
+                <h3><?php echo htmlspecialchars($athlete['prenom'] . ' ' . $athlete['nom']); ?></h3>
                 <div class="form-group">
                     <label>Temps réalisé (format: MM:SS.ms) :</label>
-                    <input type="text" name="temps[<?= $athlete['id'] ?>]" 
-                           value="<?= $athlete['temps_realise'] ?>" 
+                    <input type="text" name="temps[<?php echo $athlete['id']; ?>]" 
+                           value="<?php echo $athlete['temps_realise']; ?>" 
                            pattern="[0-9]{2}:[0-9]{2}.[0-9]{2}">
                 </div>
             </div>

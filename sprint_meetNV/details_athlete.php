@@ -1,18 +1,20 @@
 <?php
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 $id = $_GET['id'];
-$sql = "SELECT * FROM users WHERE id = $id AND role = 'athlete'";
-$stmt = $pdo->query($sql);
-$athlete = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Récupérer uniquement les colonnes qui existent dans la table courses
+// Récupérer les informations de l'athlète
+$sql = "SELECT * FROM users WHERE id = $id AND role = 'athlete'";
+$result = mysqli_query($conn, $sql);
+$athlete = mysqli_fetch_assoc($result);
+
+// Récupérer les courses auxquelles l'athlète est inscrit
 $sql_courses = "SELECT c.nom, c.date_course 
                 FROM courses c 
                 JOIN inscriptions i ON c.id = i.course_id 
                 WHERE i.user_id = $id";
-$stmt_courses = $pdo->query($sql_courses);
-$courses = $stmt_courses->fetchAll(PDO::FETCH_ASSOC);
+$result_courses = mysqli_query($conn, $sql_courses);
+$courses = mysqli_fetch_all($result_courses, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -95,11 +97,11 @@ $courses = $stmt_courses->fetchAll(PDO::FETCH_ASSOC);
     <h1>Détails de l'athlète</h1>
     
     <div class="info-athlete">
-        <h2><?= $athlete['prenom'] . ' ' . $athlete['nom'] ?></h2>
-        <p>Email: <?= $athlete['email'] ?></p>
-        <p>Profil: <?= $athlete['profil'] ?></p>
-        <p>Genre: <?= $athlete['sexe'] ?></p>
-        <p>Record: <?= $athlete['record_officiel'] ?></p>
+        <h2><?php echo $athlete['prenom'] . ' ' . $athlete['nom']; ?></h2>
+        <p>Email: <?php echo $athlete['email']; ?></p>
+        <p>Profil: <?php echo $athlete['profil']; ?></p>
+        <p>Genre: <?php echo $athlete['sexe']; ?></p>
+        <p>Record: <?php echo $athlete['record_officiel']; ?></p>
     </div>
 
     <h2>Courses inscrites</h2>
@@ -108,10 +110,10 @@ $courses = $stmt_courses->fetchAll(PDO::FETCH_ASSOC);
             <th>Course</th>
             <th>Date</th>
         </tr>
-        <?php foreach($courses as $course): ?>
+        <?php foreach ($courses as $course): ?>
             <tr>
-                <td><?= $course['nom'] ?></td>
-                <td><?= $course['date_course'] ?></td>
+                <td><?php echo $course['nom']; ?></td>
+                <td><?php echo $course['date_course']; ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

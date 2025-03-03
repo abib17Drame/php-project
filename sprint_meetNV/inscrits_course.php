@@ -1,21 +1,44 @@
 <?php
-require_once 'includes/db_connect.php';
+// Connexion à la base de données
+$connection = mysqli_connect('localhost', 'root', '', 'course_db');
 
-$id = $_GET['id'];
+// Vérifier si la connexion a réussi
+if (mysqli_connect_error()) {
+    die("La connexion a échoué : " . mysqli_connect_error());
+}
+
+// Récupérer l'ID de la course depuis l'URL
+$course_id = $_GET['id'];
+
+// Requête SQL pour récupérer les informations de la course
+$sql_course = "SELECT * FROM courses WHERE id = $course_id";
+$result_course = mysqli_query($connection, $sql_course);
+
+// Vérifier si la requête a réussi
+if (!$result_course) {
+    die("Erreur dans la requête : " . mysqli_error($connection));
+}
 
 // Récupérer les informations de la course
-$sql = "SELECT * FROM courses WHERE id = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$id]);
-$course = $stmt->fetch();
+$course = mysqli_fetch_assoc($result_course);
 
-// Récupérer les inscrits
-$sql = "SELECT u.* FROM users u 
-        JOIN inscriptions i ON u.id = i.user_id 
-        WHERE i.course_id = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$id]);
-$inscrits = $stmt->fetchAll();
+// Requête SQL pour récupérer les inscrits à la course
+$sql_inscrits = "SELECT u.nom, u.prenom, u.email, u.profil 
+                 FROM users u 
+                 JOIN inscriptions i ON u.id = i.user_id 
+                 WHERE i.course_id = $course_id";
+$result_inscrits = mysqli_query($connection, $sql_inscrits);
+
+// Vérifier si la requête a réussi
+if (!$result_inscrits) {
+    die("Erreur dans la requête : " . mysqli_error($connection));
+}
+
+// Récupérer tous les inscrits
+$inscrits = [];
+while ($row = mysqli_fetch_assoc($result_inscrits)) {
+    $inscrits[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,8 +72,8 @@ $inscrits = $stmt->fetchAll();
     </style>
 </head>
 <body>
-    <h1>Inscrits à la course : <?= $course['nom'] ?></h1>
-    <h2>Date : <?= $course['date_course'] ?></h2>
+    <h1>Inscrits à la course : <?php echo $course['nom']; ?></h1>
+    <h2>Date : <?php echo $course['date_course']; ?></h2>
 
     <table class="inscrits-table">
         <tr>
@@ -59,12 +82,12 @@ $inscrits = $stmt->fetchAll();
             <th>Email</th>
             <th>Profil</th>
         </tr>
-        <?php foreach($inscrits as $inscrit): ?>
+        <?php foreach ($inscrits as $inscrit): ?>
             <tr>
-                <td><?= $inscrit['nom'] ?></td>
-                <td><?= $inscrit['prenom'] ?></td>
-                <td><?= $inscrit['email'] ?></td>
-                <td><?= $inscrit['profil'] ?></td>
+                <td><?php echo $inscrit['nom']; ?></td>
+                <td><?php echo $inscrit['prenom']; ?></td>
+                <td><?php echo $inscrit['email']; ?></td>
+                <td><?php echo $inscrit['profil']; ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

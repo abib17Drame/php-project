@@ -1,24 +1,25 @@
 <?php
 session_start();
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
+// Vérifie si l'utilisateur est connecté et est un arbitre
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'arbitre') {
     header('Location: login.html');
     exit;
 }
 
 // Récupérer l'historique des courses arbitrées
+$arbitre_id = $_SESSION['user_id'];
 $sql = "SELECT c.*, COUNT(i.user_id) as nb_participants 
         FROM courses c 
         INNER JOIN arbitrage a ON c.id = a.course_id 
         LEFT JOIN inscriptions i ON c.id = i.course_id
-        WHERE a.arbitre_id = ? 
+        WHERE a.arbitre_id = $arbitre_id 
         GROUP BY c.id
         ORDER BY c.date_course DESC";
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['user_id']]);
-$historique = $stmt->fetchAll();
+$result = mysqli_query($conn, $sql);
+$historique = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -95,9 +96,6 @@ $historique = $stmt->fetchAll();
         <nav>
             <ul>
                 <li><a href="dashboard_arbitre.php">Accueil</a></li>
-                <li><a href="noter_performances.php">Noter Performances</a></li>
-                <li><a href="consulter_resultats.php">Consulter Résultats</a></li>
-                <li><a href="historique_arbitrage.php">Historique Courses</a></li>
                 <li><a href="scripts/logout.php">Se Déconnecter</a></li>
             </ul>
         </nav>
@@ -113,15 +111,15 @@ $historique = $stmt->fetchAll();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($historique as $course): ?>
+                <?php foreach ($historique as $course): ?>
                     <tr>
-                        <td><?= htmlspecialchars($course['nom']) ?></td>
-                        <td><?= $course['date_course'] ?></td>
-                        <td><?= htmlspecialchars($course['course_type']) ?></td>
-                        <td><?= $course['nb_participants'] ?></td>
+                        <td><?php echo htmlspecialchars($course['nom']); ?></td>
+                        <td><?php echo $course['date_course']; ?></td>
+                        <td><?php echo htmlspecialchars($course['course_type']); ?></td>
+                        <td><?php echo $course['nb_participants']; ?></td>
                         <td>
-                            <a class="btn btn-noter" href="noter_performances.php?course_id=<?= $course['id'] ?>">Noter</a>
-                            <a class="btn btn-consulter" href="consulter_resultats.php?course_id=<?= $course['id'] ?>">Résultats</a>
+                            <a class="btn btn-noter" href="noter_performances.php?course_id=<?php echo $course['id']; ?>">Noter</a>
+                            <a class="btn btn-consulter" href="consulter_resultats.php?course_id=<?php echo $course['id']; ?>">Résultats</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -2,16 +2,27 @@
 require_once 'includes/db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $sql = "INSERT INTO courses (nom, date_course, statut_inscription) 
-            VALUES (?, ?, ?)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        $_POST['nom'],
-        $_POST['date'],
-        'ouvert'  // Par défaut ouvert
-    ]);
-    header('Location: courses.php');
-    exit;
+    $course_type = $_POST['course_type'];
+    $round_type = $_POST['round_type'];
+    $date = $_POST['date'];
+    $gender = $_POST['gender'];
+    $statut = $_POST['statut'];
+
+    // Generate course name based on type and gender
+    $nom = $course_type . " " . $gender;
+
+    $sql = "INSERT INTO courses (nom, course_type, round_type, date_course, statut_inscription) 
+            VALUES (?, ?, ?, ?, ?)";
+            
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "sssss", $nom, $course_type, $round_type, $date, $statut);
+
+    if (mysqli_stmt_execute($stmt)) {
+        header('Location: courses.php');
+        exit;
+    } else {
+        echo "Erreur : " . mysqli_error($conn);
+    }
 }
 ?>
 
@@ -22,51 +33,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Ajouter une Course</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
         }
         form {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #2c3e50;
+            font-weight: bold;
         }
-        input, textarea {
+        select, input {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 10px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        select:focus, input:focus {
+            border-color: #3498db;
+            outline: none;
         }
         button {
-            background: #27ae60;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
         }
         button:hover {
-            background: #219a52;
+            transform: translateY(-2px);
         }
         .retour {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             background: #3498db;
             color: white;
             text-decoration: none;
-            border-radius: 4px;
-            margin-top: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .retour:hover {
+            background: #2980b9;
         }
     </style>
 </head>
@@ -75,13 +99,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <form method="POST">
         <div class="form-group">
-            <label>Nom de la course</label>
-            <input type="text" name="nom" required>
+            <label>Type de course</label>
+            <select name="course_type" required>
+                <option value="Sprint100m">Sprint 100m</option>
+                <option value="Sprint120m">Sprint 120m</option>
+                <option value="Haies100m">Haies 100m</option>
+                <option value="Relais4x100m">Relais 4x100m</option>
+                <option value="Relais4x400m">Relais 4x400m</option>
+                <option value="Autre">Autre</option>
+            </select>
         </div>
+
+        <div class="form-group">
+            <label>Type de tour</label>
+            <select name="round_type" required>
+                <option value="Series">Séries</option>
+                <option value="DemiFinale">Demi-Finale</option>
+                <option value="Finale">Finale</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Catégorie</label>
+            <select name="gender" required>
+                <option value="Homme">Homme</option>
+                <option value="Femme">Femme</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Statut</label>
+            <select name="statut" required>
+                <option value="ouvert">Ouvert</option>
+                <option value="fermé">Fermé</option>
+            </select>
+        </div>
+
         <div class="form-group">
             <label>Date</label>
             <input type="date" name="date" required>
         </div>
+
         <button type="submit">Ajouter la course</button>
     </form>
     
