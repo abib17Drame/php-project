@@ -13,6 +13,7 @@
       <li><a href="courses.php">Gérer les Courses</a></li>
       <li><a href="arbitres.php">Gérer les Arbitres</a></li>
       <li><a href="results.php">Voir les Résultats</a></li>
+      <li><a href="resultats_courses.php">Résultats</a></li>
       <li><a href="stats_athlete.php">Voir les Statistiques</a></li>
       <li><a href="scripts/logout.php">Se déconnecter</a></li>
     </ul>

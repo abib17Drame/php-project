@@ -8,9 +8,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'athlete') {
     exit;
 }
 
-// Récupère les inscriptions de l'utilisateur
+// Récupère les inscriptions de l'utilisateur avec le couloir attribué
 $user_id = $_SESSION['user_id'];
-$sql = "SELECT i.course_id, c.nom, c.date_course, c.course_type, c.round_type
+$sql = "SELECT i.course_id, i.couloir, c.nom, c.date_course, c.course_type, c.round_type
         FROM inscriptions i
         JOIN courses c ON i.course_id = c.id
         WHERE i.user_id = '$user_id'
@@ -134,6 +134,7 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <th>Type course</th>
                     <th>Date & Heure</th>
                     <th>Statut</th>
+                    <th>Couloir</th>
                     <th>Détails</th>
                     <th>Annuler</th>
                 </tr>
@@ -141,18 +142,19 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <tbody>
                 <?php if (empty($registrations)): ?>
                     <tr>
-                        <td colspan="6" style="text-align: center;">Vous n'êtes inscrit à aucune course pour le moment.</td>
+                        <td colspan="7" style="text-align: center;">Vous n'êtes inscrit à aucune course pour le moment.</td>
                     </tr>
                 <?php else: ?>
                     <?php foreach ($registrations as $reg): 
-                        $statut = (strtotime($reg['date_course']) < time()) ? 'Terminée' : 'À venir';
-                        $statutClass = (strtotime($reg['date_course']) < time()) ? 'statut terminee' : 'statut a-venir';
+                        $statut = (strtotime($reg['date_course']) > time()) ? 'Terminée' : 'À venir';
+                        $statutClass = (strtotime($reg['date_course']) > time()) ? 'statut terminee' : 'statut a-venir';
                     ?>
                     <tr>
                         <td><?php echo $reg['nom']; ?></td>
                         <td><?php echo $reg['course_type']; ?></td>
                         <td><?php echo $reg['date_course']; ?></td>
                         <td class="<?php echo $statutClass; ?>"><?php echo $statut; ?></td>
+                        <td><?php echo ($reg['couloir'] ?? 'Non attribué'); ?></td>
                         <td><button class="details-btn" onclick="alert('Nom: <?php echo $reg['nom']; ?>\nDate: <?php echo $reg['date_course']; ?>\nStatut: <?php echo $statut; ?>')">Détails</button></td>
                         <td><a href="ann_ins.php?course_id=<?php echo $reg['course_id']; ?>">Annuler</a></td>
                     </tr>

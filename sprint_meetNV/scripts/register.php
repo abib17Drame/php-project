@@ -56,12 +56,11 @@ if ($count > 0) {
 // Insère l'utilisateur dans la base de données
 $sql = "INSERT INTO users (
     nom, prenom, email, mot_de_passe, role, profil, 
-    sexe, pays, age, discipline, discipline_equipe, record_officiel, 
-    nom_equipe, identifiant
+    sexe, pays, age, discipline, discipline_equipe, record_officiel, identifiant
 ) VALUES (
     '$nom', '$prenom', '$email', '$mot_de_passe', '$role', '$profil',
     '$sexe', '$pays', '$age', '$discipline', '$discipline_equipe', '$record',
-    '$nom_equipe', " . (isset($identifiant) ? "'$identifiant'" : "''") . "
+    " . (isset($identifiant) ? "'$identifiant'" : "''") . "
 )";
 
 if (mysqli_query($conn, $sql)) {

@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once 'includes/db_connect.php'; // Connexion à la base de données
 
 // Récupération des courses
 $sql = "SELECT * FROM courses ORDER BY date_course DESC";
@@ -42,6 +42,8 @@ $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
         .btn-add { background: #27ae60; }
         .btn-edit { background: #3498db; }
         .btn-delete { background: #e74c3c; }
+        .btn-view { background: #f39c12; }
+        .btn-assign { background: #8e44ad; }
         .add-course {
             margin-bottom: 20px;
         }
@@ -63,7 +65,6 @@ $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <th>Actions</th>
         </tr>
         <?php foreach ($courses as $course): 
-            // Compter les inscrits pour cette course
             $sql_count = "SELECT COUNT(*) FROM inscriptions WHERE course_id = " . $course['id'];
             $count_result = mysqli_query($conn, $sql_count);
             $count = mysqli_fetch_row($count_result)[0];
@@ -77,9 +78,6 @@ $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <a href="modifier_course.php?id=<?php echo $course['id']; ?>" class="btn btn-edit">Modifier</a>
                     <a href="supprimer_course.php?id=<?php echo $course['id']; ?>" class="btn btn-delete">Supprimer</a>
                     <a href="inscrits_course.php?id=<?php echo $course['id']; ?>" class="btn btn-view">Voir inscrits</a>
-                    <a href="toggle_statut.php?id=<?php echo $course['id']; ?>" class="btn">
-                        <?php echo $course['statut_inscription'] == 'ouvert' ? 'Fermer' : 'Ouvrir'; ?>
-                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>

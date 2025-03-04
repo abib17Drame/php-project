@@ -170,6 +170,7 @@
       <ul>
         <li><a href="dashboard_arbitre.php">Accueil</a></li>
         <li><a href="historique_arbitrage.php">Courses Assignées</a></li>
+        <li><a href="resultats_courses.php">Résultats</a></li>
         <li><a href="scripts/logout.php">Se Déconnecter</a></li>
       </ul>
     </nav>

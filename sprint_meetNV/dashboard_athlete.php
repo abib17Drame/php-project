@@ -153,9 +153,9 @@
     <nav>
         <ul>
             <li><a href="scripts/mescourses.php">Courses inscrit</a></li>
-            <li><a href="results.php">Résultats</a></li>
             <li><a href="stats_athlete.php">Statistiques</a></li>
             <li><a href="scripts/choix_course.php">S'inscrire à une course</a></li>
+            <li><a href="resultats_courses.php">Résultats</a></li>
             <li><a href="scripts/logout.php">Déconnexion</a></li>
         </ul>
     </nav>
