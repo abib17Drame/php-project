@@ -116,10 +116,9 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <body>
     <nav>
         <ul>
-            <li><a href="../dashboard_athlete.html">Tableau de bord</a></li>
+            <li><a href="../dashboard_athlete.php">Tableau de bord</a></li>
             <li><a href="mes_informations.php">Mes informations</a></li>
             <li><a href="../results.php">Résultats</a></li>
-            <li><a href="mes_stats.html">Statistiques</a></li>
             <li><a href="choix_course.php">S'inscrire à une course</a></li>
             <li><a href="logout.php">Déconnexion</a></li>
         </ul>
@@ -133,7 +132,6 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <th>Nom de la course</th>
                     <th>Type course</th>
                     <th>Date & Heure</th>
-                    <th>Statut</th>
                     <th>Couloir</th>
                     <th>Détails</th>
                     <th>Annuler</th>
@@ -153,7 +151,6 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <td><?php echo $reg['nom']; ?></td>
                         <td><?php echo $reg['course_type']; ?></td>
                         <td><?php echo $reg['date_course']; ?></td>
-                        <td class="<?php echo $statutClass; ?>"><?php echo $statut; ?></td>
                         <td><?php echo ($reg['couloir'] ?? 'Non attribué'); ?></td>
                         <td><button class="details-btn" onclick="alert('Nom: <?php echo $reg['nom']; ?>\nDate: <?php echo $reg['date_course']; ?>\nStatut: <?php echo $statut; ?>')">Détails</button></td>
                         <td><a href="ann_ins.php?course_id=<?php echo $reg['course_id']; ?>">Annuler</a></td>

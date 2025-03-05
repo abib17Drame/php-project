@@ -190,6 +190,6 @@ $result = mysqli_query($conn, $sql);
         <?php endif; ?>
     </div>
 
-    <a href="../dashboard_athlete.html" class="retour-btn">Retour au tableau de bord</a>
+    <a href="../dashboard_athlete.php" class="retour-btn">Retour au tableau de bord</a>
 </body>
 </html>

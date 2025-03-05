@@ -41,6 +41,21 @@ while ($row = mysqli_fetch_assoc($result)) {
         ];
     }
 }
+
+// Trier les résultats de chaque course par temps croissant (temps le plus court en premier)
+// Attention : ici nous supposons que les temps sont dans un format reconnu par strtotime (par ex. "H:i:s" ou "i:s")
+foreach ($courses as &$course) {
+    if (!empty($course['resultats'])) {
+        usort($course['resultats'], function($a, $b) {
+            // Utiliser strtotime si le format du temps est compatible
+            return strtotime($a['temps']) - strtotime($b['temps']);
+            // Si vos temps sont en secondes (format numérique), vous pouvez utiliser :
+            // return $a['temps'] - $b['temps'];
+        });
+    }
+}
+unset($course); // libérer la référence
+
 ?>
 
 <!DOCTYPE html>
@@ -57,13 +72,11 @@ while ($row = mysqli_fetch_assoc($result)) {
             padding: 20px;
             background-color: #f5f5f5;
         }
-
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 30px;
         }
-
         .filter-section {
             background: white;
             padding: 20px;
@@ -71,14 +84,12 @@ while ($row = mysqli_fetch_assoc($result)) {
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
-
         .filter-form {
             display: flex;
             gap: 15px;
             align-items: center;
             justify-content: center;
         }
-
         .filter-form select,
         .filter-form input {
             padding: 10px;
@@ -86,7 +97,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             border-radius: 4px;
             font-size: 14px;
         }
-
         .filter-form button {
             padding: 10px 20px;
             background: #2196F3;
@@ -95,7 +105,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             border-radius: 4px;
             cursor: pointer;
         }
-
         .reset-btn {
             padding: 10px 20px;
             background: #666;
@@ -103,7 +112,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             text-decoration: none;
             border-radius: 4px;
         }
-
         .course-card {
             background: white;
             border-radius: 8px;
@@ -111,30 +119,25 @@ while ($row = mysqli_fetch_assoc($result)) {
             margin-bottom: 30px;
             padding: 20px;
         }
-
         .course-header {
             border-bottom: 2px solid #eee;
             padding-bottom: 15px;
             margin-bottom: 20px;
         }
-
         .course-header h2 {
             color: #333;
             margin: 0;
         }
-
         .course-info {
             color: #666;
             font-size: 0.9em;
             margin-top: 10px;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
-
         th {
             background-color: #f8f9fa;
             color: #333;
@@ -142,32 +145,26 @@ while ($row = mysqli_fetch_assoc($result)) {
             text-align: left;
             border-bottom: 2px solid #ddd;
         }
-
         td {
             padding: 12px;
             border-bottom: 1px solid #eee;
         }
-
         .position {
             font-weight: bold;
             color: #2196F3;
         }
-
         .no-results {
             text-align: center;
             color: #666;
             padding: 20px;
         }
-
         tr:hover {
             background-color: #f8f9fa;
         }
-
         button:hover,
         .reset-btn:hover {
             opacity: 0.9;
         }
-
     </style>
 </head>
 <body>
