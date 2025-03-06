@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - PURE Athletics Sprint Elite Meet</title>
+  <style>
+    /* Styles généraux */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;   
+      padding: 0;
+      background-color: #e0e7ff; /* Bleu légèrement sombre */
+      text-align: center;
+      color: #333;
+    }
+
+    header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: whitesmoke; /* Fond blanc */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.logo {
+    width: 250px;
+    height: auto;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+}
+
+
+    .logo:hover {
+      transform: scale(1.1);
+    }
+    h1 {
+    color: black; /* Texte en noir */
+    font-size: 3em;
+    margin: 0;
+    flex-grow: 1; /* Permet au texte de prendre l'espace disponible */
+    text-align: center; /* Centre le texte */
+}
+    /* Navigation */
+    nav {
+      background-color: hsl(227, 36%, 30%);
+      padding: 30px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 0;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px; /* Espacement autour du texte */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 5px;
+    font-size: 1.5rem; /* Taille de police augmentée */
+}
+
+    nav ul li a:hover {
+      background-color: #2563eb;
+      transform: translateY(-3px);
+    }
+
+    /* Section d'accueil */
+    .hero {
+      padding: 100px 20px;
+      background: url('images/image1.jpg') no-repeat center center/cover;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .hero h2 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      animation: slideIn 1.5s ease-in-out;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      animation: slideIn 1.5s ease-in-out;
+    }
+
+    /* Contenu principal */
+    .container {
+      padding: 60px 20px;
+      background-color: white;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .container h2 {
+      color: #222;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .container p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1.1em;
+    }
+
+    /* Images */
+    .image-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .image-gallery img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .image-gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    /* Pied de page */
+    footer {
+      background-color: #222f53;
+      color: white;
+      padding: 20px;
+      margin-top: 40px;
+      box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9em;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .logo {
+        margin-bottom: 10px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero {
+        padding: 60px 20px;
+      }
+
+      .hero h2 {
+        font-size: 2em;
+      }
+
+      .hero p {
+        font-size: 1em;
+      }
+
+      .container {
+        padding: 40px 20px;
+      }
+
+      .image-gallery img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo.png" alt="Logo du tournoi" class="logo">
+    <h1>Bienvenue sur PURE Athletics Sprint Elite Meet</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="login.html">Se connecter</a></li>
+      <li><a href="role.php">S'inscrire</a></li>
+      <li><a href="public_courses.php">Courses Publiques</a></li>
+      <li><a href="resultats_courses.php">Résultats</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h2>Vitesse, Puissance, Excellence</h2>
+    <p>Rejoignez l'élite du sprint et assistez à des performances spectaculaires.</p>
+  </section>
+
+  <div class="container">
+    <h2>Un événement unique dédié aux sprinteurs</h2>
+    <p>Le PURE Athletics Sprint Elite Meet est le rendez-vous incontournable des amateurs de vitesse. Découvrez des courses intenses, des records en jeu et une compétition féroce entre les meilleurs athlètes du sprint.</p>
+  </div>
+
+  <div class="image-gallery">
+    <img src="images/image1.jpg" alt="Sprint en action">
+    <img src="images/image2.jpg" alt="Ligne de départ">
+  </div>
+
+  <footer>
+    <p>&copy; 2025 PURE Athletics Sprint Elite Meet - Tous droits réservés.</p>
+  </footer>
+</body>
+</html>
