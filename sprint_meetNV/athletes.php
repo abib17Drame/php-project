@@ -9,6 +9,7 @@ require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la 
   <title>Gestion des Athlètes - Sprint Meet</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+   
       .athlete-table {
           width: 100%;
           border-collapse: collapse;
@@ -50,6 +51,18 @@ require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la 
         padding: 5px 10px;
         border-radius: 4px;
       }
+      .retour {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .retour:hover {
+            background: #2980b9;
   </style>
 </head>
 <body>
@@ -128,5 +141,6 @@ require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la 
           });
       });
   </script>
+  <a href="dashboard_admin.php" class="retour">Retour au tableau de bord</a>
 </body>
 </html>

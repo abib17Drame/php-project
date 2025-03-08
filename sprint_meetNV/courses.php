@@ -47,6 +47,18 @@ $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
         .add-course {
             margin-bottom: 20px;
         }
+        .retour {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .retour:hover {
+            background: #2980b9;
     </style>
 </head>
 <body>
@@ -82,5 +94,6 @@ $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </tr>
         <?php endforeach; ?>
     </table>
+    <a href="dashboard_admin.php" class="retour">Retour au tableau de bord</a>
 </body>
 </html>

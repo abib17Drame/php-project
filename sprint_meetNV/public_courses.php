@@ -57,6 +57,71 @@ $result = mysqli_query($conn, $sql);
             background: #666;
             pointer-events: none;
         }
+        /* Global */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Container Grid */
+.d {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Carte de course */
+.carte_cou {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre de la course */
+.titre_course {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Informations sur la course */
+.course-info {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Bouton d'inscription */
+.inscription-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #2196F3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.inscription-btn:hover {
+    background: #1976D2;
+}
+
+/* Bouton pour inscriptions fermées */
+.statut-ferme {
+    background: #666;
+    pointer-events: none;
+}
+
     </style>
 </head>
 <body>

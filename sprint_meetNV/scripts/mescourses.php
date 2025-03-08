@@ -26,36 +26,56 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <title>Mes Courses</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+         body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
 
-        nav {
-            background-color: #333;
-            padding: 10px;
-        }
+    h1 {
+      color: #2c3e50;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+        
 
         nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      background: #2c3e50;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 15px 20px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+    nav ul li a:hover {
+      background: #34495e;
+      transform: translateY(-3px);
+    }
 
         #mes-courses {
             background-color: white;
@@ -79,12 +99,12 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
         }
 
         th {
-            background-color: #333;
+            background-color: #34495e;
             color: white;
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: ; 
         }
 
         .statut {
@@ -100,7 +120,7 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
         }
 
         .details-btn {
-            background-color: #333;
+            background-color:#34495e;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -114,16 +134,17 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </style>
 </head>
 <body>
+    <div class="container">
     <nav>
         <ul>
             <li><a href="../dashboard_athlete.php">Tableau de bord</a></li>
             <li><a href="mes_informations.php">Mes informations</a></li>
-            <li><a href="../results.php">Résultats</a></li>
+            <li><a href="../resultats_courses.php">Résultats</a></li>
             <li><a href="choix_course.php">S'inscrire à une course</a></li>
             <li><a href="logout.php">Déconnexion</a></li>
         </ul>
     </nav>
-
+    </div>
     <section id="mes-courses">
         <h1>Mes Courses</h1>
         <table>

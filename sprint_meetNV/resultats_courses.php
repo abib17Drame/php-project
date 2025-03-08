@@ -7,10 +7,11 @@ $typescourse = mysqli_fetch_all($typeres, MYSQLI_ASSOC);
 
 $sql = "SELECT c.id, c.nom, c.course_type, c.date_course,
         u.nom as athlete_nom, u.prenom as athlete_prenom,
-        i.temps_realise
+        COALESCE(i.temps_realise, '00:00:00') as temps_realise
         FROM courses c
         LEFT JOIN inscriptions i ON c.id = i.course_id
         LEFT JOIN users u ON i.user_id = u.id";
+
 
 if (!empty($_GET['type'])) {
     $sql .= " WHERE c.course_type = '" . $_GET['type'] . "'";

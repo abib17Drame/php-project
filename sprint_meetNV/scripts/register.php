@@ -17,7 +17,7 @@ if (isset($_POST['identifiant']) && !empty($_POST['identifiant'])) {
     $age = '';
     $discipline = '';
     $discipline_equipe = '';
-    $record = $_POST['record'] ?? '00:00:00';
+    $record = isset($_POST['record_officiel']) ? $_POST['record_officiel'] : '00:00:00';
     $nom_equipe = '';
 } else {
     $role = 'athlete';
@@ -26,7 +26,7 @@ if (isset($_POST['identifiant']) && !empty($_POST['identifiant'])) {
         $nom_equipe = $_POST['nom_equipe'];
         $sexe_equipe = $_POST['sexe_equipe'] ?? '';
         $discipline_equipe = $_POST['discipline_equipe'] ?? '';
-        $record = $_POST['record'] ?? '00:00:00';
+        $record = isset($_POST['record_officiel']) ? $_POST['record_officiel'] : '00:00:00';
         $sexe = '';
         $age = '';
         $pays = '';
@@ -37,7 +37,7 @@ if (isset($_POST['identifiant']) && !empty($_POST['identifiant'])) {
         $discipline = $_POST['discipline'] ?? '';
         $age = $_POST['age'] ?? '';
         $pays = $_POST['pays'] ?? '';
-        $record = $_POST['record'] ?? '00:00:00';
+        $record = isset($_POST['record_officiel']) ? $_POST['record_officiel'] : '00:00:00';
         $nom_equipe = '';
         $discipline_equipe = '';
     }
@@ -54,6 +54,9 @@ if ($count > 0) {
 }
 
 // Insère l'utilisateur dans la base de données
+$sexe = isset($_POST['sexe']) ? $_POST['sexe'] : 'homme';
+$age = isset($_POST['age']) && $_POST['age'] !== '' ? $_POST['age'] : 0; 
+$record = isset($_POST['record_officiel']) && !empty($_POST['record_officiel']) ? $_POST['record_officiel'] : '00:00:00';
 $sql = "INSERT INTO users (
     nom, prenom, email, mot_de_passe, role, profil, 
     sexe, pays, age, discipline, discipline_equipe, record_officiel, identifiant

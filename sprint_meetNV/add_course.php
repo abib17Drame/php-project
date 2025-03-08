@@ -92,6 +92,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .retour:hover {
             background: #2980b9;
         }
+        .accueil {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .accueil:hover {
+            background: #219653;
+        }
     </style>
 </head>
 <body>
@@ -102,8 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Type de course</label>
             <select name="course_type" required>
                 <option value="Sprint100m">Sprint 100m</option>
-                <option value="Sprint120m">Sprint 120m</option>
+                <option value="Sprint120m">Sprint 200m</option>
+                <option value="Sprint400m">Sprint 400m</option>
                 <option value="Haies100m">Haies 100m</option>
+                <option value="Haies110m">Haies 110m</option>
+                <option value="Haies400m">Haies 400m</option>
                 <option value="Relais4x100m">Relais 4x100m</option>
                 <option value="Relais4x400m">Relais 4x400m</option>
                 <option value="Autre">Autre</option>
@@ -144,5 +161,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
     
     <a href="courses.php" class="retour">Retour à la liste</a>
+    <a href="dashboard_admin.php" class="retour">Retour au tableau de bord</a>
 </body>
 </html>
