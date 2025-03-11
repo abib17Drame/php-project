@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choix du rôle</title>
     <style>
+        :root {
+            --primary-color: #2980b9; /* Bleu élégant */
+            --secondary-color: #e74c3c; /* Rouge vibrant */
+        }
+
         body {
             font-family: Arial, sans-serif;
             max-width: 600px;
@@ -12,28 +17,37 @@
             padding: 20px;
             text-align: center;
         }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
         .role-container {
             display: flex;
             justify-content: center;
             gap: 30px;
             margin-top: 40px;
         }
+
         .role-btn {
             padding: 20px 40px;
             font-size: 18px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            background-color: #f0f0f0;
+            transition: transform 0.3s ease, background 0.3s ease;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            font-weight: 700;
         }
+
         .role-btn:hover {
             transform: scale(1.05);
-            background-color: #e0e0e0;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
         }
     </style>
 </head>

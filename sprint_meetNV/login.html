@@ -3,21 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <title>Connexion - Sprint Meet</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #2980b9; /* Bleu élégant */
+      --secondary-red: #e74c3c; /* Rouge vibrant */
+      --white: #fff;
+      --black: #000;
+    }
+
+    /* Styles généraux */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Titre avec gradient */
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--primary-blue), var(--secondary-red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    /* Formulaire de connexion */
+    form {
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid var(--primary-blue);
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary-blue);
+      color: var(--white);
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: var(--secondary-red);
+    }
+
+    /* Lien d'inscription */
+    p {
+      margin-top: 20px;
+    }
+    a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--secondary-red);
+    }
+  </style>
 </head>
 <body>
-  <h1>Connexion</h1>
-  <form action="scripts/login.php" method="POST">
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" required>
-    
-    <label for="mot_de_passe">Mot de passe :</label>
-    <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-    
-    <button type="submit">Se connecter</button>
-  </form>
-  <p>Pas encore inscrit ? <a href="role.php">S'inscrire</a></p>
+  <div>
+    <h1>Connexion</h1>
+    <form action="scripts/login.php" method="POST">
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="mot_de_passe">Mot de passe :</label>
+      <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+      
+      <button type="submit">Se connecter</button>
+    </form>
+    <p>Pas encore inscrit ? <a href="role.php">S'inscrire</a></p>
+  </div>
 </body>
 </html>
-
-

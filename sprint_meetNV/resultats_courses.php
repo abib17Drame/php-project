@@ -12,7 +12,6 @@ $sql = "SELECT c.id, c.nom, c.course_type, c.date_course,
         LEFT JOIN inscriptions i ON c.id = i.course_id
         LEFT JOIN users u ON i.user_id = u.id";
 
-
 if (!empty($_GET['type'])) {
     $sql .= " WHERE c.course_type = '" . $_GET['type'] . "'";
 }
@@ -25,7 +24,6 @@ $sql .= " ORDER BY c.date_course DESC";
 $result = mysqli_query($conn, $sql);
 $courses = [];
 
-// Organisation des données
 while ($row = mysqli_fetch_assoc($result)) {
     if (!isset($courses[$row['id']])) {
         $courses[$row['id']] = [
@@ -43,20 +41,14 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
 }
 
-// Trier les résultats de chaque course par temps croissant (temps le plus court en premier)
-// Attention : ici nous supposons que les temps sont dans un format reconnu par strtotime (par ex. "H:i:s" ou "i:s")
 foreach ($courses as &$course) {
     if (!empty($course['resultats'])) {
         usort($course['resultats'], function($a, $b) {
-            // Utiliser strtotime si le format du temps est compatible
             return strtotime($a['temps']) - strtotime($b['temps']);
-            // Si vos temps sont en secondes (format numérique), vous pouvez utiliser :
-            // return $a['temps'] - $b['temps'];
         });
     }
 }
-unset($course); // libérer la référence
-
+unset($course);
 ?>
 
 <!DOCTYPE html>
@@ -64,107 +56,160 @@ unset($course); // libérer la référence
 <head>
     <meta charset="UTF-8">
     <title>Résultats des Courses - Sprint Meet</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Réinitialisation et variables de couleur */
+        :root {
+            --primary-blue: #2980b9; /* Bleu principal */
+            --secondary-red: #e74c3c; /* Rouge secondaire */
+            --white: #fff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #666; /* Gris moyen */
+            --dark-blue: #1f6690; /* Bleu foncé pour survol */
+            --dark-red: #b93c2f; /* Rouge foncé pour survol */
+            --gold: gold;
+            --silver: silver;
+            --bronze: #cd7f32;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--light-gray);
+            color: #333;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
         }
+
+        /* Titre principal */
         h1 {
+            font-size: 2rem;
+            font-weight: 700;
             text-align: center;
-            color: #333;
             margin-bottom: 30px;
+            color: var(--primary-blue);
         }
+
+        /* Section de filtre */
         .filter-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--white);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
         .filter-form {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .filter-form select,
-        .filter-form input {
-            padding: 10px;
-            border: 1px solid #ddd;
+        .filter-form input[type="date"] {
+            padding: 8px;
+            border: 1px solid var(--medium-gray);
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 1rem;
+            color: #333;
+            background: var(--white);
         }
         .filter-form button {
             padding: 10px 20px;
-            background: #2196F3;
-            color: white;
+            background: var(--primary-blue);
+            color: var(--white);
             border: none;
             border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
             cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        .filter-form button:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
         .reset-btn {
             padding: 10px 20px;
-            background: #666;
-            color: white;
+            background: var(--secondary-red);
+            color: var(--white);
             text-decoration: none;
             border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
+        .reset-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Carte de course */
         .course-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            padding: 20px;
+            background: var(--white);
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 15px;
         }
         .course-header {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
         .course-header h2 {
-            color: #333;
-            margin: 0;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: 700;
         }
         .course-info {
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 10px;
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
+
+        /* Tableau des résultats */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         th {
-            background-color: #f8f9fa;
-            color: #333;
-            padding: 12px;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 10px;
             text-align: left;
-            border-bottom: 2px solid #ddd;
+            font-weight: 700;
         }
         td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        .position {
-            font-weight: bold;
-            color: #2196F3;
-        }
-        .no-results {
-            text-align: center;
-            color: #666;
-            padding: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
         }
         tr:hover {
-            background-color: #f8f9fa;
+            background: #f0f0f0;
         }
-        button:hover,
-        .reset-btn:hover {
-            opacity: 0.9;
+        .position {
+            font-weight: 700;
+        }
+        tr:nth-child(1) .position { color: var(--gold); }
+        tr:nth-child(2) .position { color: var(--silver); }
+        tr:nth-child(3) .position { color: var(--bronze); }
+
+        /* Message "Aucun résultat" */
+        .no-results {
+            text-align: center;
+            color: var(--medium-gray);
+            padding: 15px;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -174,13 +219,13 @@ unset($course); // libérer la référence
             <select name="type">
                 <option value="">Tous les types de courses</option>
                 <?php foreach ($typescourse as $type): ?>
-                    <option value="<?php echo $type['course_type']; ?>" 
+                    <option value="<?php echo htmlspecialchars($type['course_type']); ?>" 
                             <?php echo ($_GET['type'] ?? '') == $type['course_type'] ? 'selected' : ''; ?>>
-                        <?php echo $type['course_type']; ?>
+                        <?php echo htmlspecialchars($type['course_type']); ?>
                     </option>
                 <?php endforeach; ?>
             </select>
-            <input type="date" name="date" value="<?php echo $_GET['date'] ?? ''; ?>">
+            <input type="date" name="date" value="<?php echo htmlspecialchars($_GET['date'] ?? ''); ?>">
             <button type="submit">Filtrer</button>
             <a href="resultats_courses.php" class="reset-btn">Réinitialiser</a>
         </form>
@@ -191,9 +236,9 @@ unset($course); // libérer la référence
     <?php foreach ($courses as $course): ?>
         <div class="course-card">
             <div class="course-header">
-                <h2><?php echo $course['nom']; ?></h2>
+                <h2><?php echo htmlspecialchars($course['nom']); ?></h2>
                 <div class="course-info">
-                    Type: <?php echo $course['type']; ?> | Date: <?php echo $course['date']; ?>
+                    Type: <?php echo htmlspecialchars($course['type']); ?> | Date: <?php echo htmlspecialchars($course['date']); ?>
                 </div>
             </div>
             <?php if (!empty($course['resultats'])): ?>
@@ -206,8 +251,8 @@ unset($course); // libérer la référence
                     ?>
                         <tr>
                             <td class="position"><?php echo $position++; ?></td>
-                            <td><?php echo $resultat['athlete']; ?></td>
-                            <td><?php echo $resultat['temps']; ?></td>
+                            <td><?php echo htmlspecialchars($resultat['athlete']); ?></td>
+                            <td><?php echo htmlspecialchars($resultat['temps']); ?></td>
                         </tr>
                     <?php 
                         endif;

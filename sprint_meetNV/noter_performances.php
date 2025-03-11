@@ -34,34 +34,113 @@ $athletes = mysqli_fetch_all($result_athletes, MYSQLI_ASSOC);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Noter les Performances</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noter les Performances - Sprint Meet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-blue: #2980b9; /* Bleu élégant */
+            --secondary-red: #e74c3c; /* Rouge vibrant */
+            --white: #fff;
+            --black: #000;
+        }
+
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            text-align: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* En-tête */
+        header {
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-red));
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            color: var(--white);
+        }
+        h1 {
+            font-size: 2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Formulaire de performances */
         .performance-form {
             max-width: 800px;
             margin: 20px auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .athlete-row {
             padding: 15px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 8px;
+            background: var(--white);
         }
         .form-group {
             margin: 10px 0;
         }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
         .btn-save {
-            background: #27ae60;
-            color: white;
+            background: var(--primary-blue); /* Bleu principal */
+            color: var(--white);
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .btn-save:hover {
+            background: #1f6690; /* Bleu plus foncé au survol */
+            transform: translateY(-3px);
+        }
+
+        /* Lien Retour */
+        .retour {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary-blue);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .retour:hover {
+            background: var(--secondary-red);
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
-    <h1>Noter les Performances - <?php echo htmlspecialchars($course['nom']); ?></h1>
-    
+    <header>
+        <h1>Noter les Performances - <?php echo htmlspecialchars($course['nom']); ?></h1>
+    </header>
+
     <form class="performance-form" method="POST" action="sauvegarder_performances.php">
         <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
         <?php foreach ($athletes as $athlete): ?>
@@ -77,7 +156,7 @@ $athletes = mysqli_fetch_all($result_athletes, MYSQLI_ASSOC);
         <?php endforeach; ?>
         <button type="submit" class="btn-save">Sauvegarder les résultats</button>
     </form>
-    
-    <a href="dashboard_arbitre.php">Retour au tableau de bord</a>
+
+    <a href="dashboard_arbitre.php" class="retour">Retour au tableau de bord</a>
 </body>
 </html>

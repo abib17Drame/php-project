@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'athlete') {
     exit;
 }
 
-//  l 'inscription à une course
+// Inscription à une course
 if (isset($_GET['course_id'])) {
     $course_id = $_GET['course_id'];
     $user_id = $_SESSION['user_id'];
@@ -52,109 +52,172 @@ $result = mysqli_query($conn, $sql);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Inscription aux Courses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription aux Courses - Sprint Meet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-blue: #2980b9; /* Bleu élégant */
+            --secondary-red: #e74c3c; /* Rouge vibrant */
+            --white: #fff;
+            --black: #000;
+        }
+
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f7fa;
-        }
-
-        h2 {
-            color: #2c3e50;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--black);
             text-align: center;
-            margin-bottom: 30px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
         }
 
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-red));
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            color: var(--white);
+        }
+        h1 {
+            font-size: 2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Messages d’erreur ou de succès */
+        .message {
+            padding: 15px;
+            margin: 20px auto;
+            border-radius: 8px;
+            max-width: 600px;
+            font-size: 1rem;
+        }
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* Grille des courses */
         .courses-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
         .course-item {
-            background: white;
+            background: var(--white);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: left;
         }
-
         .course-item:hover {
             transform: translateY(-5px);
         }
-
         .course-item h3 {
-            color: #34495e;
-            margin-top: 0;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
-
         .course-item p {
             color: #7f8c8d;
-            margin: 10px 0;
+            font-size: 0.9rem;
+            margin: 5px 0;
         }
 
+        /* Boutons d’action */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--white);
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+        .btn i {
+            margin-right: 5px;
+        }
         .btn-inscription {
-            display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-            transition: background 0.3s;
+            background-color: var(--primary-blue);
+            margin-top: 10px;
         }
-
         .btn-inscription:hover {
-            background: #2980b9;
+            background-color: #1f6690;
+            transform: translateY(-3px);
+        }
+        .btn-closed {
+            background-color: var(--secondary-red);
+            margin-top: 10px;
+        }
+        .btn-closed:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
         }
 
-        .statut-ferme {
+        /* Lien Retour */
+        .retour {
             display: inline-block;
-            background: #e74c3c;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .retour-btn {
-            display: inline-block;
-            background: #2c3e50;
-            color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
+            background: var(--primary-blue);
+            color: var(--white);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .retour:hover {
+            background: var(--secondary-red);
+            transform: translateY(-3px);
         }
 
-        .message {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .error {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        .success {
-            background: #e8f5e9;
-            color: #2e7d32;
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .courses-list {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+            .course-item {
+                padding: 15px;
+            }
+            .btn, .retour {
+                padding: 8px 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <h2>Courses disponibles</h2>
+    <header>
+        <h1>Inscription aux Courses</h1>
+    </header>
 
     <?php if (isset($_GET['error'])): ?>
         <div class="message error">
@@ -178,18 +241,18 @@ $result = mysqli_query($conn, $sql);
                     <p>Type: <?php echo htmlspecialchars($row['course_type']); ?></p>
                     <p>Tour: <?php echo htmlspecialchars($row['round_type']); ?></p>
                     <p>Date: <?php echo htmlspecialchars($row['date_course']); ?></p>
-                    <?php if($row['statut_inscription'] === 'ouvert'): ?>
-                        <a href="?course_id=<?php echo $row['id']; ?>" class="btn-inscription">S'inscrire</a>
+                    <?php if ($row['statut_inscription'] === 'ouvert'): ?>
+                        <a href="?course_id=<?php echo $row['id']; ?>" class="btn btn-inscription"><i class="fas fa-plus"></i> S'inscrire</a>
                     <?php else: ?>
-                        <span class="statut-ferme">Inscriptions fermées</span>
+                        <span class="btn btn-closed"><i class="fas fa-lock"></i> Inscriptions fermées</span>
                     <?php endif; ?>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p>Aucune course disponible pour le moment.</p>
+            <p style="text-align: center; width: 100%; padding: 20px;">Aucune course disponible pour le moment.</p>
         <?php endif; ?>
     </div>
 
-    <a href="../dashboard_athlete.php" class="retour-btn">Retour au tableau de bord</a>
+    <a href="../dashboard_athlete.php" class="retour"><i class="fas fa-arrow-left"></i> Retour au tableau de bord</a>
 </body>
 </html>

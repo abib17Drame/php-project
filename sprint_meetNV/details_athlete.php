@@ -21,91 +21,133 @@ $courses = mysqli_fetch_all($result_courses, MYSQLI_ASSOC);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Détails Athlète</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails Athlète - Sprint Meet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-blue: #2980b9; /* Bleu principal */
+            --secondary-red: #e74c3c; /* Rouge secondaire */
+            --white: #fff;
+            --black: #000;
+        }
+
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            text-align: center;
+            min-height: 100vh;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .info-athlete {
-            background: #f8f9fa;
+        /* En-tête */
+        header {
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-red));
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            color: var(--white);
+        }
+        h1 {
+            font-size: 2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Section des informations de l'athlète */
+        .info-athlete {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
-
         .info-athlete h2 {
-            color: #34495e;
+            color: var(--primary-blue);
             margin-bottom: 20px;
         }
-
         .info-athlete p {
             margin: 10px 0;
             color: #444;
         }
 
-        table {
+        /* Tableau des courses */
+        .courses-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-
-        th, td {
+        .courses-table th, .courses-table td {
             padding: 12px;
             text-align: left;
             border: 1px solid #ddd;
         }
-
-        th {
-            background: #2c3e50;
-            color: white;
+        .courses-table th {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+        .courses-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .courses-table tr:hover {
+            background-color: #e0e7ff;
         }
 
-        tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        a {
+        /* Bouton Retour */
+        .retour {
             display: inline-block;
-            padding: 10px 20px;
-            background: #3498db;
-            color: white;
+            padding: 12px 25px;
+            background: var(--primary-blue);
+            color: var(--white);
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .retour:hover {
+            background: var(--secondary-red);
+            transform: translateY(-3px);
         }
 
-        a:hover {
-            background: #2980b9;
+        /* Design responsive */
+        @media (max-width: 600px) {
+            .info-athlete, .courses-table {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .retour {
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Détails de l'athlète</h1>
-    
+    <header>
+        <h1>Détails de l'athlète</h1>
+    </header>
+
     <div class="info-athlete">
         <h2><?php echo $athlete['prenom'] . ' ' . $athlete['nom']; ?></h2>
-        <p>Email: <?php echo $athlete['email']; ?></p>
-        <p>Profil: <?php echo $athlete['profil']; ?></p>
-        <p>Genre: <?php echo $athlete['sexe']; ?></p>
-        <p>Record: <?php echo $athlete['record_officiel']; ?></p>
+        <p><strong>Email :</strong> <?php echo $athlete['email']; ?></p>
+        <p><strong>Profil :</strong> <?php echo $athlete['profil']; ?></p>
+        <p><strong>Genre :</strong> <?php echo $athlete['sexe']; ?></p>
+        <p><strong>Record :</strong> <?php echo $athlete['record_officiel']; ?></p>
     </div>
 
     <h2>Courses inscrites</h2>
-    <table border="1">
+    <table class="courses-table">
         <tr>
             <th>Course</th>
             <th>Date</th>
@@ -118,6 +160,6 @@ $courses = mysqli_fetch_all($result_courses, MYSQLI_ASSOC);
         <?php endforeach; ?>
     </table>
 
-    <a href="athletes.php">Retour à la liste</a>
+    <a href="athletes.php" class="retour">Retour à la liste</a>
 </body>
 </html>
