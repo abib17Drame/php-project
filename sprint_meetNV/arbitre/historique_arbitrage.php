@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'includes/db_connect.php'; // Connexion à la base de données
+require_once '../includes/db_connect.php'; // Connexion à la base de données
 
 // Vérification de la connexion et du rôle d'arbitre
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'arbitre') {

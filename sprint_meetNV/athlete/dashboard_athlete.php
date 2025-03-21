@@ -1,30 +1,9 @@
-<?php
-session_start();
-require_once '../includes/db_connect.php';
-
-// Vérifie si l'utilisateur est connecté et est un athlète
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'athlete') {
-    header("Location: ../login.html");
-    exit;
-}
-
-// Récupère les inscriptions de l'utilisateur avec le couloir attribué
-$user_id = $_SESSION['user_id'];
-$sql = "SELECT i.course_id, i.couloir, c.nom, c.date_course, c.course_type, c.round_type
-        FROM inscriptions i
-        JOIN courses c ON i.course_id = c.id
-        WHERE i.user_id = '$user_id'
-        ORDER BY c.date_course ASC";
-$result = mysqli_query($conn, $sql);
-$registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Courses - Sprint Meet</title>
+    <title>Tableau de bord Athlète - Sprint Meet</title>
     <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Fonts -->
@@ -142,59 +121,28 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
-        /* Section des courses */
-        .courses-section {
-            background: var(--white);
+        /* Section d'informations */
+        .athlete-info {
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-red));
+            border-radius: 10px;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .courses-section h1 {
-            font-size: 2rem;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--white);
             text-align: center;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .athlete-info ul {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
         }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
+        .athlete-info ul li {
+            margin: 10px 0;
         }
-        th {
-            background-color: var(--primary-blue);
+        .athlete-info strong {
             color: var(--white);
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #e0e7ff;
-        }
-        .details-btn {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .details-btn:hover {
-            background-color: #1f6690;
-        }
-        .cancel-link {
-            color: var(--secondary-red);
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .cancel-link:hover {
             text-decoration: underline;
         }
 
@@ -215,11 +163,7 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 flex-direction: column;
                 text-align: center;
             }
-            .courses-section {
-                padding: 15px;
-            }
-            table th, table td {
-                padding: 8px;
+            .athlete-info {
                 font-size: 0.9rem;
             }
         }
@@ -231,11 +175,10 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <aside class="sidebar" id="sidebar">
             <div class="logo">Sprint Meet</div>
             <ul>
-                <li><a href="../dashboard_athlete.php"><i class="fas fa-tachometer-alt"></i><span>Tableau de bord</span></a></li>
-                <li><a href="mes_informations.php"><i class="fas fa-user"></i><span>Mes informations</span></a></li>
+                <li><a href="mescourses.php"><i class="fas fa-running"></i><span>Courses inscrites</span></a></li>
                 <li><a href="choix_course.php"><i class="fas fa-flag-checkered"></i><span>S'inscrire à une course</span></a></li>
                 <li><a href="../resultats_courses.php"><i class="fas fa-chart-line"></i><span>Résultats</span></a></li>
-                <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a></li>
+                <li><a href="../scripts/logout.php"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a></li>
             </ul>
         </aside>
 
@@ -244,47 +187,21 @@ $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <!-- Header -->
             <header>
                 <div class="toggle-btn" id="toggleBtn"><i class="fas fa-bars"></i></div>
-                <h1>Mes Courses</h1>
+                <h1>Tableau de Bord Athlète</h1>
                 <div class="user-profile">
                     <i class="fas fa-user-circle" style="font-size: 2rem;"></i>
                 </div>
             </header>
 
-            <!-- Section des courses -->
-            <section class="courses-section">
-                <h1>Mes Courses</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nom de la course</th>
-                            <th>Type course</th>
-                            <th>Date & Heure</th>
-                            <th>Couloir</th>
-                            <th>Détails</th>
-                            <th>Annuler</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (empty($registrations)): ?>
-                            <tr>
-                                <td colspan="6" style="text-align: center;">Vous n'êtes inscrit à aucune course pour le moment.</td>
-                            </tr>
-                        <?php else: ?>
-                            <?php foreach ($registrations as $reg): 
-                                $statut = (strtotime($reg['date_course']) > time()) ? 'À venir' : 'Terminée';
-                            ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($reg['nom']); ?></td>
-                                <td><?php echo htmlspecialchars($reg['course_type']); ?></td>
-                                <td><?php echo htmlspecialchars($reg['date_course']); ?></td>
-                                <td><?php echo htmlspecialchars($reg['couloir'] ?? 'Non attribué'); ?></td>
-                                <td><button class="details-btn" onclick="alert('Nom: <?php echo htmlspecialchars($reg['nom']); ?>\nDate: <?php echo htmlspecialchars($reg['date_course']); ?>\nStatut: <?php echo $statut; ?>')">Détails</button></td>
-                                <td><a href="ann_ins.php?course_id=<?php echo $reg['course_id']; ?>" class="cancel-link">Annuler</a></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+            <!-- Section d'informations -->
+            <section class="athlete-info">
+                <p>Vous êtes connecté en tant qu'athlète. Depuis ce tableau de bord, vous pouvez :</p>
+                <ul>
+                    <li><strong>S'inscrire à une course</strong></li>
+                    <li><strong>Voir les courses auxquelles vous êtes inscrit</strong> 🏃‍♂️</li>
+                    <li><strong>Consulter vos résultats et vos performances</strong> 🏆</li>
+                </ul>
+                <p>Utilisez le menu à gauche pour naviguer entre les différentes sections.</p>
             </section>
         </div>
     </div>

@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 // Récupération des arbitres
 $sql = "SELECT * FROM users WHERE role = 'arbitre' ORDER BY nom, prenom";

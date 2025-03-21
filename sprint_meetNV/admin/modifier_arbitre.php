@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 
 $id = $_GET['id'];
 
@@ -8,31 +8,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $email = $_POST['email'];
-    $profil = $_POST['profil'];
-    $sexe = $_POST['sexe'];
+    $identifiant = $_POST['identifiant'];
 
-    // Requête SQL pour mettre à jour l'athlète
+    // Requête SQL pour mettre à jour l'arbitre
     $sql = "UPDATE users SET 
             nom = '$nom',
             prenom = '$prenom',
             email = '$email',
-            profil = '$profil',
-            sexe = '$sexe'
-            WHERE id = $id AND role = 'athlete'";
+            identifiant = '$identifiant'
+            WHERE id = $id AND role = 'arbitre'";
     
     // Exécute la requête
     if (mysqli_query($conn, $sql)) {
-        header('Location: athletes.php');
+        header('Location: arbitres.php');
         exit;
     } else {
         echo "Erreur : " . mysqli_error($conn);
     }
 }
 
-// Récupérer les informations de l'athlète
-$sql = "SELECT * FROM users WHERE id = $id AND role = 'athlete'";
+// Récupérer les informations de l'arbitre
+$sql = "SELECT * FROM users WHERE id = $id AND role = 'arbitre'";
 $result = mysqli_query($conn, $sql);
-$athlete = mysqli_fetch_assoc($result);
+$arbitre = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +38,7 @@ $athlete = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier Athlète - Sprint Meet</title>
+    <title>Modifier Arbitre - Sprint Meet</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -97,7 +95,7 @@ $athlete = mysqli_fetch_assoc($result);
             font-weight: bold;
             color: var(--primary-blue);
         }
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -114,6 +112,7 @@ $athlete = mysqli_fetch_assoc($result);
         }
         .btn-save {
             background: var(--primary-blue);
+            border: none;
         }
         .btn-save:hover {
             background: #1f6690;
@@ -136,6 +135,9 @@ $athlete = mysqli_fetch_assoc($result);
             h1 {
                 font-size: 1.5rem;
             }
+            .form-container {
+                padding: 15px;
+            }
             .btn {
                 padding: 8px 15px;
             }
@@ -144,39 +146,29 @@ $athlete = mysqli_fetch_assoc($result);
 </head>
 <body>
     <header>
-        <h1>Modifier l'athlète</h1>
+        <h1>Modifier l'arbitre</h1>
     </header>
 
     <div class="form-container">
         <form method="POST">
             <div class="form-group">
-                <label>Nom:</label>
-                <input type="text" name="nom" value="<?php echo $athlete['nom']; ?>" required>
+                <label>Nom</label>
+                <input type="text" name="nom" value="<?php echo htmlspecialchars($arbitre['nom']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Prénom:</label>
-                <input type="text" name="prenom" value="<?php echo $athlete['prenom']; ?>" required>
+                <label>Prénom</label>
+                <input type="text" name="prenom" value="<?php echo htmlspecialchars($arbitre['prenom']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Email:</label>
-                <input type="email" name="email" value="<?php echo $athlete['email']; ?>" required>
+                <label>Email</label>
+                <input type="email" name="email" value="<?php echo htmlspecialchars($arbitre['email']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Profil:</label>
-                <select name="profil">
-                    <option value="individuel" <?php echo $athlete['profil'] == 'individuel' ? 'selected' : ''; ?>>Individuel</option>
-                    <option value="equipe" <?php echo $athlete['profil'] == 'equipe' ? 'selected' : ''; ?>>Équipe</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Genre:</label>
-                <select name="sexe">
-                    <option value="homme" <?php echo $athlete['sexe'] == 'homme' ? 'selected' : ''; ?>>Homme</option>
-                    <option value="femme" <?php echo $athlete['sexe'] == 'femme' ? 'selected' : ''; ?>>Femme</option>
-                </select>
+                <label>Identifiant</label>
+                <input type="text" name="identifiant" value="<?php echo htmlspecialchars($arbitre['identifiant']); ?>" required>
             </div>
             <button type="submit" class="btn btn-save">Enregistrer</button>
-            <a href="athletes.php" class="btn btn-cancel">Annuler</a>
+            <a href="arbitres.php" class="btn btn-cancel">Annuler</a>
         </form>
     </div>
 </body>

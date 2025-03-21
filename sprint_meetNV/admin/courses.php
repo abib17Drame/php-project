@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db_connect.php'; // Connexion à la base de données
+require_once '../includes/db_connect.php'; // Connexion à la base de données
 
 // Récupération des courses
 $sql = "SELECT * FROM courses ORDER BY date_course DESC";

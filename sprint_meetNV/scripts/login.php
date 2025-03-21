@@ -8,7 +8,7 @@ $mot_de_passe = $_POST['mot_de_passe'];
 if ($email === "admin@sprintmeet.com" && $mot_de_passe === "admin") {
     $_SESSION['user_id'] = "admin";
     $_SESSION['role'] = "admin";
-    header("Location: ../dashboard_admin.php");
+    header("Location: ../admin/dashboard_admin.php");
     exit;
 }
 
@@ -24,9 +24,9 @@ if ($result && mysqli_num_rows($result) > 0) {
 
         // Redirection selon le rôle
         if ($user['role'] === 'arbitre') {
-            header("Location: ../dashboard_arbitre.php");
+            header("Location: ../arbitre/dashboard_arbitre.php");
         } else {
-            header("Location: ../dashboard_athlete.php");
+            header("Location: ../athlete/dashboard_athlete.php");
         }
         exit;
     }

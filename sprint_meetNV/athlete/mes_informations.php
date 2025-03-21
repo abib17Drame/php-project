@@ -166,7 +166,7 @@ function afficherLienFichier($fichier, $label) {
             <p><strong>Âge :</strong> <?php echo htmlspecialchars($user['age'] ?? 'Non renseigné'); ?></p>
             <p><strong>Pays :</strong> <?php echo htmlspecialchars($user['pays'] ?? 'Non renseigné'); ?></p>
         </div>
-        <a href="../dashboard_athlete.php" class="retour"><i class="fas fa-arrow-left"></i> Retour au tableau de bord</a>
+        <a href="dashboard_athlete.php" class="retour"><i class="fas fa-arrow-left"></i> Retour au tableau de bord</a>
     </section>
 </body>
 </html>

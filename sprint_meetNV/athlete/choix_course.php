@@ -36,7 +36,7 @@ if (isset($_GET['course_id'])) {
     if (mysqli_query($conn, $insert_sql)) {
         header("Location: mescourses.php?success=inscription_reussie");
     } else {
-        header("Location: choix_course.php?error=erreur_inscription");
+        header("Location: choix_course.php");
     }
     exit;
 }
@@ -253,6 +253,6 @@ $result = mysqli_query($conn, $sql);
         <?php endif; ?>
     </div>
 
-    <a href="../dashboard_athlete.php" class="retour"><i class="fas fa-arrow-left"></i> Retour au tableau de bord</a>
+    <a href="dashboard_athlete.php" class="retour"><i class="fas fa-arrow-left"></i> Retour au tableau de bord</a>
 </body>
 </html>

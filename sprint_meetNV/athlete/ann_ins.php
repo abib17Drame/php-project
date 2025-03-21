@@ -21,9 +21,9 @@ $sql = "DELETE FROM inscriptions WHERE user_id = '$user_id' AND course_id = '$co
 
 // Exécute la requête
 if (mysqli_query($conn, $sql)) {
-    header("Location: ../scripts/mescourses.php?message=Inscription annulée");
+    header("Location: mescourses.php?message=Inscription annulée");
 } else {
-    header("Location: ../scripts/mescourses.php?message=Erreur d'annulation");
+    header("Location: mescourses.php?message=Erreur d'annulation");
 }
 exit;
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
 ?>
 
 <!DOCTYPE html>
@@ -195,7 +195,7 @@ require_once 'includes/db_connect.php'; // Inclut le fichier de connexion à la 
             <a href="details_athlete.php?id=<?php echo $athlete['id']; ?>" class="btn btn-view"><i class="fas fa-search"></i> Details</a>
             <a href="modifier_athlete.php?id=<?php echo $athlete['id']; ?>" class="btn btn-edit"><i class="fas fa-edit"></i> Modifier</a>
             <a href="supprimer_athlete.php?id=<?php echo $athlete['id']; ?>" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet athlète ?')"><i class="fas fa-trash"></i> Supprimer</a>
-            <a href="admin/voir_dossiers.php?athlete_id=<?php echo $athlete['id']; ?>" class="btn btn-voir-dossier"><i class="fas fa-folder"></i> Voir dossiers</a>
+            <a href="voir_dossiers.php?athlete_id=<?php echo $athlete['id']; ?>" class="btn btn-voir-dossier"><i class="fas fa-folder"></i> Voir dossiers</a>
           </td>
         </tr>
       <?php endforeach; ?>
