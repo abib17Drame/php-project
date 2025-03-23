@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php';
 
 $arbitre_id = $_GET['id'];
 

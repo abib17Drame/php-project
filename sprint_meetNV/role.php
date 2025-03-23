@@ -65,9 +65,9 @@
     <script>
         function redirectTo(role) {
             if(role === 'arbitre') {
-                window.location.href = 'registerAr.html';
+                window.location.href = 'arbitre/registerAr.html';
             } else if(role === 'athlete') {
-                window.location.href = 'registerA.html';
+                window.location.href = 'athlete/registerA.html';
             }
         }
     </script>

@@ -1,6 +1,5 @@
 <?php
-require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
-
+require_once '../includes/db_connect.php';
 $id = $_GET['id'];
 
 // Supprimer d'abord les inscriptions liées

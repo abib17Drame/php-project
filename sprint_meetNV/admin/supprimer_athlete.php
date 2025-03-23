@@ -1,9 +1,9 @@
 <?php
-require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php';
 
 $id = $_GET['id'];
 
-// Supprimer d'abord les performances
+// Supprim  les performances d'abord 
 $sql = "DELETE FROM performances WHERE inscription_id IN (SELECT id FROM inscriptions WHERE user_id = $id)";
 mysqli_query($conn, $sql);
 

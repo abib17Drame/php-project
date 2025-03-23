@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php'; 
 
 $id = $_GET['id'];
 
@@ -25,8 +25,8 @@ $courses = mysqli_fetch_all($result_courses, MYSQLI_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #2980b9; /* Bleu élégant */
-            --secondary-red: #e74c3c; /* Rouge vibrant */
+            --primary-blue: #2980b9; 
+            --secondary-red: #e74c3c; 
             --white: #fff;
             --black: #000;
         }

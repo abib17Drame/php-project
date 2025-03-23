@@ -36,7 +36,7 @@ if (isset($_GET['course_id'])) {
     if (mysqli_query($conn, $insert_sql)) {
         header("Location: mescourses.php?success=inscription_reussie");
     } else {
-        header("Location: choix_course.php");
+        header("Location: choix_course.php?error=erreur_inscription");
     }
     exit;
 }

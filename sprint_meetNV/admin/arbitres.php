@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db_connect.php'; // Inclut le fichier de connexion à la base de données
+require_once '../includes/db_connect.php';
 
 // Récupération des arbitres
 $sql = "SELECT * FROM users WHERE role = 'arbitre' ORDER BY nom, prenom";
@@ -16,8 +16,8 @@ $arbitres = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-blue: #2980b9; /* Bleu élégant */
-            --secondary-red: #e74c3c; /* Rouge vibrant */
+            --primary-blue: #2980b9;
+            --secondary-red: #e74c3c;
             --white: #fff;
             --black: #000;
         }

@@ -8,16 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gender = $_POST['gender'];
     $statut = $_POST['statut'];
 
-    // Generate course name based on type and gender
     $nom = $course_type . " " . $gender;
 
     $sql = "INSERT INTO courses (nom, course_type, round_type, date_course, statut_inscription) 
-            VALUES (?, ?, ?, ?, ?)";
-            
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssss", $nom, $course_type, $round_type, $date, $statut);
-
-    if (mysqli_stmt_execute($stmt)) {
+            VALUES ('$nom', '$course_type', '$round_type', '$date', '$statut')";
+    
+    if (mysqli_query($conn, $sql)) {
         header('Location: courses.php');
         exit;
     } else {
@@ -36,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-blue: #2980b9; /* Bleu élégant */
-            --secondary-red: #e74c3c; /* Rouge vibrant */
+            --primary-blue: #2980b9;
+            --secondary-red: #e74c3c; 
             --white: #fff;
             --black: #000;
         }
