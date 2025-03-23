@@ -134,7 +134,7 @@ $result = mysqli_query($conn, $sql);
                     <p>Statut: <?php echo htmlspecialchars($course['statut_inscription']); ?></p>
                 </div>
                 <?php if($course['statut_inscription'] == 'ouvert'): ?>
-                    <a href="scripts/choix_course.php" class="inscription-btn">S'inscrire</a>
+                    <a href="athlete/choix_course.php" class="inscription-btn">S'inscrire</a>
                 <?php else: ?>
                     <a class="inscription-btn statut-ferme">Inscriptions fermées</a>
                 <?php endif; ?>
