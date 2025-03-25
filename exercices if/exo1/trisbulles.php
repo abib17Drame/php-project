@@ -1,4 +1,4 @@
-<?php
+<?php 
 //TRIS BULLE PAR ORDRE CROISSANT
     $tab = [3,21,45,67,33,90,3,7,1,67,0];
     for ($i=0; $i < count($tab)-1; $i++) { 
@@ -26,5 +26,5 @@
     // }
     // for ($i=0; $i <count($tab) ; $i++) { 
     //     echo $tab[$i]."  ";
-    // }
-?>
+    // }  
+?>  
