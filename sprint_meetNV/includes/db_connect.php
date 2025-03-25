@@ -1,6 +1,6 @@
 <?php
-$host = 'localhost:3309';  // Adresse du serveur de base de données
-$db   = 'sprint_meet'; // Nom de la base de données
+$host = 'localhost';  // Adresse du serveur de base de données
+$db   = 'sp'; // Nom de la base de données
 $user = 'root';       // Nom d'utilisateur de la base de données
 $pass = '';           // Mot de passe de la base de données
 
