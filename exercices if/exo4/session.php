@@ -22,7 +22,7 @@
 </head>
 <body>
     <form action="session.php">
-        <input type="submit" value="Continuer"> avant 8 secondes
+        <input type="submit" value="Continuer"> avant 10 secondes
     </form>
 </body>
 </html>

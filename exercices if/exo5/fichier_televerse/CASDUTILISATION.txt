@@ -1,0 +1,31 @@
+Un diagramme de cas d'utilisation peut etre retablis en 4 elements differents :
+	Systemes : c'est ce que l'on veut developper (sites internet, application mobile )
+le systeme est represente par un rectangle et le nom du systeme mis dessus 
+	
+	Acteur : quelqu'un ou quelque chose qui utilise le systeme pour atteindre un objectif 
+ca peut etre une personne , une application , ou un autre systeme 
+les acteurs doivent etre toujours en dehors du systemes : ils sont externes 
+Il y'a deux types d'acteurs : 
+Primaire : qui initialise l'utilisation de notre systeme 
+Secondaire : reactionnaire (reagit au actions du systeme)
+
+	Cas d'utilisation : 
+Action qui accomplit une tache dans notre systeme 
+
+	Les relations
+Associatiion : chemin de communication entre un acteur et un cas d'utilisation  (trait continu)
+Inclusion : elle montre la dependance entre une cas d'utilisation de base et un cas d'utilisation inclus . Le cas d'utilisation inclus est executer en meme temps que l'execution du cas d'utilisation de base    
+Exemeple A cas de base et B inclus 
+A a besoin de B pour terminer 
+
+Extension :
+
+Exercice du td : 
+Systeme : Gestion d' un distributeur automatique de billets 
+Inventaires des acteurs :  porteur de carte , clients banque , gerant distributeur
+Cas d'utilisation : consulter solde , faire retrait , afficher solde , deposer argent , s'authentifier , recharger distributeur , gerer cartes avalees
+Exercice 2
+https://lucid.app/lucidspark/2b2c00df-f5b5-44b9-a3c7-74c9fbb116ac/edit?viewport_loc=-493%2C-91%2C2691%2C1287%2C0_0&invitationId=inv_64c65c4d-6064-4139-b24f-85d1b175bb93
+https://lucid.app/lucidchart/ed6c602e-1b27-48b1-97f3-03a3354bb55c/edit?viewport_loc=-1313%2C-1583%2C2092%2C976%2C0_0&invitationId=inv_a49e245c-8730-4caf-bfda-7dec6a7ec179
+
+https://lucid.app/lucidchart/f3e24deb-4fcd-4f90-bcd9-d68f16323f15/edit?viewport_loc=-2078%2C-936%2C2832%2C1272%2C0_0&invitationId=inv_7d816f3d-0a8d-4140-9800-71202365b798

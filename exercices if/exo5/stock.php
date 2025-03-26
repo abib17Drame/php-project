@@ -18,10 +18,10 @@
     echo "Nom du fichier Original: ".$_FILES["monfichier"]['name']."<br>";
     echo "Emplacement temporaire : ".$_FILES["monfichier"]['tmp_name']."<br>";
     echo "Taille du fichier Original: ".$_FILES["monfichier"]['size']." octets<br><br>";
-    move_uploaded_file($_FILES["monfichier"]["tmp_name"], "../fichier_televerse/" . $_FILES["monfichier"]["name"]);
+    move_uploaded_file($_FILES["monfichier"]["tmp_name"], "fichier_televerse/" . $_FILES["monfichier"]["name"]);
     $nomorigin  = $_FILES["monfichier"]["name"];
 
-    if (!($fichier = fopen("../fichier_televerse/$nomorigin", "r"))) {
+    if (!($fichier = fopen("fichier_televerse/$nomorigin", "r"))) {
         die("Probleme d'ouverture du fichier");
     }
     while (!feof($fichier)) {
