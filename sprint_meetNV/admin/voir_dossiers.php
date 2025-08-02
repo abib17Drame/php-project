@@ -7,27 +7,19 @@ if (!isset($_GET['athlete_id']) || empty($_GET['athlete_id'])) {
     die("ID de l'athlète non spécifié.");
 }
 
-$athlete_id = intval($_GET['athlete_id']); // Sécuriser l'ID de l'athlète
+$athlete_id = intval($_GET['athlete_id']);
 
 // Récupérer les informations de l'athlète
-$sql = "SELECT id, nom, prenom FROM users WHERE role = 'athlete' AND id = ?";
-$stmt = mysqli_prepare($conn, $sql);
-if (!$stmt) {
-    die("Erreur de préparation de la requête : " . mysqli_error($conn));
-}
+$sql = "SELECT id, nom, prenom FROM users WHERE role = 'athlete' AND id = $athlete_id";
+$result = mysqli_query($conn, $sql);
 
-mysqli_stmt_bind_param($stmt, "i", $athlete_id);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-
-// Vérifier si l'athlète existe
-if (mysqli_num_rows($result) === 0) {
+if (!$result || mysqli_num_ls($result) === 0) {
     die("Aucun athlète trouvé avec cet ID.");
 }
 
-$row = mysqli_fetch_assoc($result);
-$prenom = $row['prenom'];
-$nom = $row['nom'];
+$l = mysqli_fetch_assoc($result);
+$prenom = $l['prenom'];
+$nom = $l['nom'];
 
 // Dossier où les fichiers sont stockés
 $upload_dir = "../../uploads/";
@@ -38,9 +30,9 @@ $piece_identite_file = $prenom . "_" . $athlete_id . "_cn";
 $diplome_file = $prenom . "_" . $athlete_id . "_ds";
 
 // Fonction pour vérifier si un fichier existe
-function fileExists($upload_dir, $base_name) {
+function verifier_existence($upload_dir, $base_name) {
     // Liste des extensions possibles
-    $extensions = ['.pdf', '.jpg', '.png', '.jpeg', '.txt','.docx']; // Ajoutez .txt ici
+    $extensions = ['.pdf', '.jpg', '.png', '.jpeg', '.txt','.docx']; 
     foreach ($extensions as $ext) {
         if (file_exists($upload_dir . $base_name . $ext)) {
             return $base_name . $ext;
@@ -50,9 +42,9 @@ function fileExists($upload_dir, $base_name) {
 }
 
 // Vérifier l'existence des fichiers
-$record_file_path = fileExists($upload_dir, $record_file);
-$piece_identite_file_path = fileExists($upload_dir, $piece_identite_file);
-$diplome_file_path = fileExists($upload_dir, $diplome_file);
+$record_file_path = verifier_existence($upload_dir, $record_file);
+$piece_identite_file_path = verifier_existence($upload_dir, $piece_identite_file);
+$diplome_file_path = verifier_existence($upload_dir, $diplome_file);
 ?>
 
 <!DOCTYPE html>
