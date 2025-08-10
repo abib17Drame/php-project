@@ -13,7 +13,11 @@ $athlete_id = intval($_GET['athlete_id']);
 $sql = "SELECT id, nom, prenom FROM users WHERE role = 'athlete' AND id = $athlete_id";
 $result = mysqli_query($conn, $sql);
 
+<<<<<<< HEAD
 if (!$result || mysqli_num_ls($result) === 0) {
+=======
+if (!$result || mysqli_num_rows($result) === 0) {
+>>>>>>> 0f118cec1b481b713438cb5982b9634f6a40bdc8
     die("Aucun athlète trouvé avec cet ID.");
 }
 

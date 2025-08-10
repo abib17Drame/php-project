@@ -1,31 +1,34 @@
-
 <?php
-//TRIS INSERTION DE MANIERE DECROISSANTE .
-    // $tab = [4,5,2,87,90,12,43,12,78,21];
-    // for ($i=1; $i < count($tab); $i++) { 
-    //     $cle_ins = $tab[$i];
-    //     $j=$i; 
-    //     while ($j>0 && $tab[$j-1]<$cle_ins) {
-    //         $tab[$j] = $tab[$j-1];
-    //         $j = $j -1;
-    //     }
-    //     $tab[$j] = $cle_ins;
-    // } 
-    // for ($i=0; $i <count($tab) ; $i++) { 
-    //     echo $tab[$i]."  ";
-    // }
-//TRIS INSERTION DE MANIERE CROISSANTE .
-    $tab = [4,5,2,87,90,12,43,12,78,21];
-    for ($i=1; $i < count($tab); $i++) { 
-        $cle_ins = $tab[$i];
-        $j=$i; 
-        while ($j>0 && $tab[$j-1]>$cle_ins) {
-            $tab[$j] = $tab[$j-1];
-            $j = $j -1;
+
+function Tri_insertion($Tab){
+    $n = count($Tab);
+    for ($i=1; $i < $n; $i++) { 
+        $val = $Tab[$i];
+        $j = $i-1;
+        while ($j >= 0 && $Tab[$j] > $val) {
+            $Tab[$j+1] = $Tab[$j];
+            $j = $j-1;
         }
-        $tab[$j] = $cle_ins;
-    } 
-    for ($i=0; $i <count($tab) ; $i++) { 
-        echo $tab[$i]."  ";
+        $Tab[$j+1] = $val;
     }
+    return $Tab;
+}
+
+//Affichage 
+function Afficher($Tab){
+    foreach ($Tab as $key) {
+        echo $key . " ";
+    }
+    echo "<br/>";
+}
+
+$Tab = [15, 98, 200, 0, 6, -7];
+
+echo "Tableau à trier: ";
+Afficher($Tab);
+
+echo "Tableau trié: ";
+$Tab_trié = Tri_insertion($Tab);
+Afficher($Tab_trié);
+
 ?>

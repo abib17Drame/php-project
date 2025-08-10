@@ -1,34 +1,39 @@
 <?php
-// TRIS PAR SELECTION PAR ORDRE CROISSANT
-    // $tab = [2,4,6,7,1,12,3,45,76,21,8];
-    // for ($i=0; $i < count($tab)-1; $i++) { 
-    //     $min = $i;
-    //     for ($j=$i+1; $j < count($tab); $j++) { 
-    //         if($tab[$j]<$tab[$min]){
-    //             $min = $j;
-    //         }
-    //         $temp = $tab[$min];
-    //         $tab[$min] = $tab[$i];
-    //         $tab[$i] = $temp;
-    //     }
-    // }
-    // for ($i=0; $i < count($tab); $i++) { 
-    //     echo $tab[$i]."  ";
-    // }
-//TRIS PAR SELECTION PAR ORDRE DECROISSANT
-    $tab = [2,4,6,7,1,12,3,45,76,21,8];
-    for ($i=0; $i < count($tab)-1; $i++) { 
-        $min = $i;
-        for ($j=$i+1; $j < count($tab); $j++) { 
-            if($tab[$j]>$tab[$min]){
-                $min = $j;
+//Tri par selection 
+
+function Tri_selection($Tab){
+    $n = count($Tab);
+    for ($i=0 ; $i < $n ; $i++) { 
+        $pos_min = $i;
+        for ($j=$i+1; $j < $n ; $j++) { 
+            if ($Tab[$j] < $Tab[$pos_min]) {
+                $pos_min = $j;
             }
-            $temp = $tab[$min];
-            $tab[$min] = $tab[$i];
-            $tab[$i] = $temp;
         }
+        $temp = $Tab[$i];
+        $Tab[$i] = $Tab[$pos_min];
+        $Tab[$pos_min] = $temp;
     }
-    for ($i=0; $i < count($tab); $i++) { 
-        echo $tab[$i]."  ";
+
+    return $Tab;
+
+}
+
+//Affichage 
+function Afficher($Tab){
+    foreach ($Tab as $key) {
+        echo $key . " ";
     }
+    echo "<br/>";
+}
+
+$Tab = [15, 98, -7, 0, 6, 200];
+
+echo "Tableau à trier: ";
+Afficher($Tab);
+
+echo "Tableau trié: ";
+$Tab_trié = Tri_selection($Tab);
+Afficher($Tab_trié);
+
 ?>
