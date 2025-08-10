@@ -1,4 +1,4 @@
-# Sprint Meet Management
+# Sprint Meet 
 
 Projet de gestion de compétitions d'athlétisme (sprint) réalisé dans le cadre de la deuxième année de DUT Informatique à l'École Supérieure Polytechnique de Dakar.
 
@@ -35,8 +35,8 @@ Suivez ces étapes pour installer et lancer le projet en local.
 
 1.  **Clonez le projet :**
     ```bash
-    git clone [URL_DU_REPOSITORY]
-    cd [NOM_DU_DOSSIER]
+    git clone https://github.com/abib17Drame/php-project.git
+    cd php-project/sprint_meetNV
     ```
 
 2.  **Base de données :**
@@ -50,15 +50,9 @@ Suivez ces étapes pour installer et lancer le projet en local.
 
 4.  **Lancement :**
     *   Placez le dossier du projet dans le répertoire racine de votre serveur web (ex: `htdocs` pour XAMPP, `www` for WAMP).
-    *   Ouvrez votre navigateur et accédez à `http://localhost/[NOM_DU_DOSSIER]/sprint_meetNV/`.
+    *   Ouvrez votre navigateur et accédez à `http://localhost/php-project/sprint_meetNV/`.
 
-## Utilisation
 
-Une fois l'application lancée, vous pouvez vous connecter avec les identifiants suivants (à vérifier/créer dans la base de données) :
-
-*   **Admin :** `admin@example.com` / `password`
-*   **Arbitre :** `arbitre@example.com` / `password`
-*   **Athlète :** `athlete@example.com` / `password`
 
 ## Auteurs
 
